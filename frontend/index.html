@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Playground</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="header__title">⚡ SQL Playground</h1>
+        <p class="header__subtitle">Practice SQL queries in a safe sandbox environment</p>
+    </header>
+
+    <div class="container">
+        <!-- LEFT: SQL Editor -->
+        <aside class="editor-panel">
+            <div class="editor-header">
+                <h2>📝 SQL Editor</h2>
+            </div>
+            
+            <textarea 
+                id="sql-editor" 
+                class="sql-editor"
+                placeholder="-- Write your SQL query here&#10;-- Example: SELECT * FROM employees;"
+            ></textarea>
+            
+            <div class="controls">
+                <button class="btn btn-run" id="run-btn">▶️ Run Query</button>
+                <button class="btn btn-clear" id="clear-btn">🗑️ Clear</button>
+            </div>
+            
+            <div class="shortcut-hint">
+                💡 Tip: Press <strong>Ctrl+Enter</strong> to run query
+            </div>
+        </aside>
+
+        <!-- RIGHT: Results & Schema -->
+        <main class="results-panel">
+            <nav class="tabs">
+                <button class="tab tab-active" data-tab="results">📊 Results</button>
+                <button class="tab" data-tab="schema">🗃️ Schema</button>
+            </nav>
+            
+            <!-- Results Tab -->
+            <div id="results-tab" class="tab-content tab-content-active">
+                <div id="message"></div>
+                <div id="results">
+                    <div class="empty-state">
+                        <div class="empty-state__icon">⚡</div>
+                        <p>Run a query to see results</p>
+                    </div>
+                </div>
+                
+                <div class="example-queries">
+                    <h3>📚 Example Queries:</h3>
+                    <code class="example-query">SELECT * FROM employees;</code>
+                    <code class="example-query">SELECT name, salary FROM employees WHERE salary > 70000;</code>
+                    <code class="example-query">SELECT department, COUNT(*) as count FROM employees GROUP BY department;</code>
+                    <code class="example-query">SELECT e.name, d.location FROM employees e JOIN departments d ON e.department = d.name;</code>
+                </div>
+            </div>
+            
+            <!-- Schema Tab -->
+            <div id="schema-tab" class="tab-content">
+                <div id="schema-container">
+                    <p class="loading-text">Loading schema...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

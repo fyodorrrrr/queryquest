@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from lessons import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/execute/', views.execute_query, name='execute_query'),
+    path('api/schema/', views.get_schema, name='get_schema'),
 ]

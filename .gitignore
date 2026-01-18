@@ -1,0 +1,49 @@
+# ========== Python ==========
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# ========== Django ==========
+*.log
+db.sqlite3
+db.sqlite3-journal
+/staticfiles/
+/media/
+
+# ========== Virtual Environment ==========
+venv/
+env/
+ENV/
+.venv
+
+# ========== IDE ==========
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ========== OS ==========
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========== Environment Variables ==========
+.env
+.env.local
+.env.*.local
+
+# ========== Node (if you add it later) ==========
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# ========== Django Secret Key ==========
+# You should move your SECRET_KEY to environment variables later
+# secrets.py
+
+# ========== Migrations (optional - usually commit these) ==========
+# backend/*/migrations/*.py
+# !backend/*/migrations/__init__.py
