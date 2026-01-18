@@ -1,12 +1,15 @@
 // ========== CONFIGURATION ==========
 const CONFIG = {
     API_URL: 'http://localhost:8000/api',
+    ANIMATION_DURATION: 200,
+    STAGGER_DELAY: 50,
 };
 
 // ========== STATE ==========
 const state = {
     editor: null,
-    currentTab: 'results'
+    currentTab: 'results',
+    isAnimating: false,
 };
 
 // ========== API FUNCTIONS ==========
@@ -37,9 +40,17 @@ const ui = {
         }
     },
 
-    displayResults(data) {
+    /**
+     * Display results as animated cards
+     */
+    async displayResults(data) {
         const container = document.getElementById('results');
+        const infoBar = document.getElementById('results-info');
         
+        // Animate out existing cards
+        await this.animateCardsOut(container);
+        
+        // Handle no columns
         if (!data.columns || data.columns.length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
@@ -47,39 +58,114 @@ const ui = {
                     <p>Query executed but returned no columns</p>
                 </div>
             `;
+            infoBar.innerHTML = '';
             return;
         }
 
-        let html = '<table><thead><tr>';
-        data.columns.forEach(col => {
-            html += `<th>${this.escapeHtml(col)}</th>`;
-        });
-        html += '</tr></thead><tbody>';
-
+        // Handle no rows
         if (data.rows.length === 0) {
-            html += `<tr><td colspan="${data.columns.length}" style="text-align: center; color: #858585;">No rows returned</td></tr>`;
-        } else {
-            data.rows.forEach(row => {
-                html += '<tr>';
-                row.forEach(cell => {
-                    const value = cell !== null ? this.escapeHtml(String(cell)) : '<span style="color: #858585;">NULL</span>';
-                    html += `<td>${value}</td>`;
-                });
-                html += '</tr>';
-            });
+            container.innerHTML = `
+                <div class="no-results">
+                    <div class="no-results__icon">📭</div>
+                    <p class="no-results__text">No rows match your query</p>
+                </div>
+            `;
+            infoBar.innerHTML = `
+                <span>Columns: ${data.columns.join(', ')}</span>
+                <span class="results-info__count">0 rows</span>
+            `;
+            return;
         }
 
-        html += '</tbody></table>';
-        container.innerHTML = html;
+        // Show results info
+        infoBar.innerHTML = `
+            <span>Columns: ${data.columns.join(', ')}</span>
+            <span class="results-info__count">${data.row_count} row${data.row_count !== 1 ? 's' : ''}</span>
+        `;
+
+        // Clear container
+        container.innerHTML = '';
+
+        // Create and animate in cards
+        data.rows.forEach((row, rowIndex) => {
+            const card = this.createCard(data.columns, row, rowIndex);
+            container.appendChild(card);
+            
+            // Staggered animation delay
+            setTimeout(() => {
+                card.classList.add('result-card--entering');
+            }, rowIndex * CONFIG.STAGGER_DELAY);
+        });
+    },
+
+    /**
+     * Create a single result card
+     */
+    createCard(columns, row, rowIndex) {
+        const card = document.createElement('div');
+        card.className = 'result-card';
+        card.style.opacity = '0';
+        
+        // Row number indicator
+        let html = `<div class="result-card__row-number">Row ${rowIndex + 1}</div>`;
+        
+        // Column-value pairs
+        columns.forEach((col, colIndex) => {
+            const value = row[colIndex];
+            const isNull = value === null;
+            const displayValue = isNull ? 'NULL' : this.escapeHtml(String(value));
+            const valueClass = isNull ? 'result-card__value result-card__value--null' : 'result-card__value';
+            
+            html += `
+                <div class="result-card__field">
+                    <div class="result-card__label">${this.escapeHtml(col)}</div>
+                    <div class="${valueClass}">${displayValue}</div>
+                </div>
+            `;
+        });
+        
+        card.innerHTML = html;
+        return card;
+    },
+
+    /**
+     * Animate existing cards out
+     */
+    animateCardsOut(container) {
+        return new Promise((resolve) => {
+            const cards = container.querySelectorAll('.result-card');
+            
+            if (cards.length === 0) {
+                resolve();
+                return;
+            }
+
+            state.isAnimating = true;
+            
+            cards.forEach((card, index) => {
+                card.classList.remove('result-card--entering');
+                card.classList.add('result-card--exiting');
+            });
+
+            // Wait for animation to complete
+            setTimeout(() => {
+                state.isAnimating = false;
+                resolve();
+            }, CONFIG.ANIMATION_DURATION);
+        });
     },
 
     clearResults() {
-        document.getElementById('results').innerHTML = `
+        const container = document.getElementById('results');
+        const infoBar = document.getElementById('results-info');
+        
+        container.innerHTML = `
             <div class="empty-state">
                 <div class="empty-state__icon">⚡</div>
                 <p>Run a query to see results</p>
             </div>
         `;
+        infoBar.innerHTML = '';
     },
 
     displaySchema(schema) {
@@ -112,13 +198,11 @@ const ui = {
     },
 
     switchTab(tabName) {
-        // Update tab buttons
         document.querySelectorAll('.tab').forEach(tab => {
             const isActive = tab.dataset.tab === tabName;
             tab.classList.toggle('tab-active', isActive);
         });
 
-        // Update tab content
         document.querySelectorAll('.tab-content').forEach(content => {
             const isActive = content.id === `${tabName}-tab`;
             content.classList.toggle('tab-content-active', isActive);
@@ -216,6 +300,9 @@ const app = {
     },
 
     async runQuery() {
+        // Prevent running if animation is in progress
+        if (state.isAnimating) return;
+        
         const query = editor.getValue();
 
         if (!query) {
@@ -229,7 +316,7 @@ const app = {
             const result = await api.executeQuery(query);
 
             if (result.success) {
-                ui.displayResults(result);
+                await ui.displayResults(result);
                 ui.showMessage(`✓ Query executed successfully (${result.row_count} rows)`, 'success');
             } else {
                 ui.showMessage(`✗ ${result.error}`, 'error');
@@ -247,7 +334,7 @@ const app = {
             ui.displaySchema(schema);
         } catch (error) {
             document.getElementById('schema-container').innerHTML = 
-                '<p style="color: #f48771;">Failed to load schema. Is the backend running?</p>';
+                '<p style="color: #dc2626;">Failed to load schema. Is the backend running?</p>';
         }
     }
 };
