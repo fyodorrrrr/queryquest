@@ -9,31 +9,129 @@
 <body>
     <header class="header">
         <h1 class="header__title">⚡ SQL Playground</h1>
-        <p class="header__subtitle">Practice SQL queries in a safe sandbox environment</p>
+        <p class="header__subtitle">Build SQL queries with puzzle blocks - no syntax errors possible!</p>
     </header>
 
     <div class="container">
-        <!-- LEFT: SQL Editor -->
-        <aside class="editor-panel">
-            <div class="editor-header">
-                <h2>📝 SQL Editor</h2>
+        <!-- LEFT: Block Menu -->
+        <aside class="block-menu">
+            <div class="block-menu__header">
+                <h2>🧩 Puzzle Blocks</h2>
+                <p style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem;">Drag available blocks to build</p>
             </div>
             
-            <textarea 
-                id="sql-editor" 
-                class="sql-editor"
-                placeholder="-- Write your SQL query here&#10;-- Example: SELECT * FROM employees;"
-            ></textarea>
-            
-            <div class="controls">
-                <button class="btn btn-run" id="run-btn">▶️ Run Query</button>
-                <button class="btn btn-clear" id="clear-btn">🗑️ Clear</button>
+            <div class="block-category">
+                <h3 class="block-category__title">Commands</h3>
+                <div class="block-list">
+                    <div class="block block--command" draggable="true" data-type="SELECT">SELECT</div>
+                    <div class="block block--command" draggable="true" data-type="FROM">FROM</div>
+                    <div class="block block--command" draggable="true" data-type="WHERE">WHERE</div>
+                    <div class="block block--command" draggable="true" data-type="JOIN">JOIN</div>
+                    <div class="block block--command" draggable="true" data-type="ON">ON</div>
+                    <div class="block block--command" draggable="true" data-type="GROUP BY">GROUP BY</div>
+                    <div class="block block--command" draggable="true" data-type="ORDER BY">ORDER BY</div>
+                    <div class="block block--command" draggable="true" data-type="LIMIT">LIMIT</div>
+                </div>
             </div>
             
-            <div class="shortcut-hint">
-                💡 Tip: Press <strong>Ctrl+Enter</strong> to run query
+            <div class="block-category">
+                <h3 class="block-category__title">Comparisons</h3>
+                <div class="block-list">
+                    <div class="block block--operator" draggable="true" data-type="=">=</div>
+                    <div class="block block--operator" draggable="true" data-type="!=">!=</div>
+                    <div class="block block--operator" draggable="true" data-type=">">&gt;</div>
+                    <div class="block block--operator" draggable="true" data-type="<">&lt;</div>
+                    <div class="block block--operator" draggable="true" data-type=">=">>=</div>
+                    <div class="block block--operator" draggable="true" data-type="<="><=</div>
+                    <div class="block block--operator" draggable="true" data-type="LIKE">LIKE</div>
+                    <div class="block block--operator" draggable="true" data-type="IN">IN</div>
+                </div>
+            </div>
+            
+            <div class="block-category">
+                <h3 class="block-category__title">Logic</h3>
+                <div class="block-list">
+                    <div class="block block--operator" draggable="true" data-type="AND">AND</div>
+                    <div class="block block--operator" draggable="true" data-type="OR">OR</div>
+                </div>
+            </div>
+            
+            <div class="block-category">
+                <h3 class="block-category__title">Functions</h3>
+                <div class="block-list">
+                    <div class="block block--function" draggable="true" data-type="COUNT()">COUNT()</div>
+                    <div class="block block--function" draggable="true" data-type="SUM()">SUM()</div>
+                    <div class="block block--function" draggable="true" data-type="AVG()">AVG()</div>
+                    <div class="block block--function" draggable="true" data-type="MIN()">MIN()</div>
+                    <div class="block block--function" draggable="true" data-type="MAX()">MAX()</div>
+                    <div class="block block--function" draggable="true" data-type="DISTINCT">DISTINCT</div>
+                </div>
+            </div>
+            
+            <div class="block-category">
+                <h3 class="block-category__title">Tables</h3>
+                <div class="block-list">
+                    <div class="block block--table" draggable="true" data-type="employees">employees</div>
+                    <div class="block block--table" draggable="true" data-type="departments">departments</div>
+                </div>
+            </div>
+            
+            <div class="block-category">
+                <h3 class="block-category__title">Columns</h3>
+                <div class="block-list">
+                    <div class="block block--column" draggable="true" data-type="*">*</div>
+                    <div class="block block--column" draggable="true" data-type="id">id</div>
+                    <div class="block block--column" draggable="true" data-type="name">name</div>
+                    <div class="block block--column" draggable="true" data-type="department">department</div>
+                    <div class="block block--column" draggable="true" data-type="salary">salary</div>
+                    <div class="block block--column" draggable="true" data-type="hire_date">hire_date</div>
+                    <div class="block block--column" draggable="true" data-type="location">location</div>
+                </div>
+            </div>
+            
+            <div class="block-category">
+                <h3 class="block-category__title">Values & Sorting</h3>
+                <div class="block-list">
+                    <div class="block block--value" draggable="true" data-type="ASC">ASC</div>
+                    <div class="block block--value" draggable="true" data-type="DESC">DESC</div>
+                    <div class="block block--value block--value-input" draggable="true" data-type="number">
+                        <span>🔢</span>
+                        <input type="number" class="block-input" placeholder="123" onclick="event.stopPropagation()">
+                    </div>
+                    <div class="block block--value block--value-input" draggable="true" data-type="text">
+                        <span>📝</span>
+                        <input type="text" class="block-input" placeholder="text" onclick="event.stopPropagation()">
+                    </div>
+                </div>
             </div>
         </aside>
+
+        <!-- CENTER: Query Builder -->
+        <section class="builder-panel">
+            <div class="builder-header">
+                <h2>🔨 Query Builder</h2>
+                <button class="btn btn-clear-builder" id="clear-builder-btn">🗑️ Clear All</button>
+            </div>
+            
+            <div id="query-canvas" class="query-canvas">
+                <div class="canvas-placeholder">
+                    <span>🧩 Drag blocks here to build your query</span>
+                    <br>
+                    <small style="color: var(--text-secondary);">Start with SELECT</small>
+                </div>
+            </div>
+            
+            <div class="generated-sql">
+                <div class="generated-sql__header">
+                    <h3>📄 Generated SQL</h3>
+                </div>
+                <pre id="generated-sql-output" class="sql-output">-- Your query will appear here</pre>
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-run btn--disabled" id="run-builder-btn" disabled>▶️ Run Query</button>
+            </div>
+        </section>
 
         <!-- RIGHT: Results & Schema -->
         <main class="results-panel">
@@ -49,20 +147,19 @@
                 <!-- Results Info Bar -->
                 <div id="results-info" class="results-info"></div>
                 
-                <!-- Card Grid Container -->
-                <div id="results" class="card-grid">
+                <!-- Table Container -->
+                <div id="results" class="results-container">
                     <div class="empty-state">
-                        <div class="empty-state__icon">⚡</div>
-                        <p>Run a query to see results</p>
+                        <div class="empty-state__icon">🧩</div>
+                        <p>Build a query and run it to see results</p>
                     </div>
                 </div>
                 
                 <div class="example-queries">
-                    <h3>📚 Example Queries:</h3>
-                    <code class="example-query">SELECT * FROM employees;</code>
-                    <code class="example-query">SELECT name, salary FROM employees WHERE salary > 70000;</code>
-                    <code class="example-query">SELECT department, COUNT(*) as count FROM employees GROUP BY department;</code>
-                    <code class="example-query">SELECT e.name, d.location FROM employees e JOIN departments d ON e.department = d.name;</code>
+                    <h3>📚 Try building these:</h3>
+                    <code class="example-query">SELECT * FROM employees</code>
+                    <code class="example-query">SELECT name, salary FROM employees WHERE salary > 70000</code>
+                    <code class="example-query">SELECT department, COUNT(*) FROM employees GROUP BY department</code>
                 </div>
             </div>
             
@@ -76,5 +173,6 @@
     </div>
 
     <script src="app.js"></script>
+    <script src="block-builder.js"></script>
 </body>
 </html>
