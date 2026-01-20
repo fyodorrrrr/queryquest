@@ -1007,3 +1007,136 @@ button {
         border: 2px solid rgba(0, 0, 0, 0.3);
     }
 }
+
+/* Function Block with Parameter Slot */
+.block--function.canvas-block .block-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.function-params {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.function-params::before {
+    content: '(';
+    font-weight: bold;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.function-params::after {
+    content: ')';
+    font-weight: bold;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.param-slot {
+    min-width: 70px;
+    min-height: 28px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.param-slot.empty {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.param-slot .slot-placeholder {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+    white-space: nowrap;
+}
+
+.param-slot.drag-over {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: #4CAF50;
+    border-style: solid;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+    transform: scale(1.05);
+}
+
+.param-slot.filled {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 0;
+    min-width: auto;
+}
+
+/* Nested parameter block styling */
+.param-slot .param-block {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    color: inherit;
+}
+
+.param-slot .param-block .param-label {
+    font-weight: 500;
+}
+
+.param-slot .remove-param {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: inherit;
+    font-size: 12px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.param-slot .remove-param:hover {
+    background: rgba(244, 67, 54, 0.8);
+    opacity: 1;
+}
+
+/* Highlight function blocks that accept drops */
+.block--function.canvas-block.accepting-drop {
+    box-shadow: 0 0 0 2px #4CAF50, 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+/* Visual hint for droppable columns */
+.block-menu .block--column.can-drop-in-function {
+    position: relative;
+}
+
+.block-menu .block--column.can-drop-in-function::after {
+    content: '→ drag into function';
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: #4CAF50;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.block-menu .block--column.can-drop-in-function:hover::after {
+    opacity: 1;
+}

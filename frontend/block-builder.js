@@ -11,8 +11,8 @@ class SQLBlockBuilder {
             'SELECT': ['DISTINCT', 'ALL', 'COLUMN', 'FUNCTION'],
             'DISTINCT': ['COLUMN', 'FUNCTION'],
             'ALL': ['COLUMN', 'FUNCTION'],
-            'COLUMN': ['COLUMN', 'FROM', 'COMMA'],
-            'FUNCTION': ['COLUMN', 'FROM', 'COMMA'],
+            'COLUMN': ['COLUMN', 'FROM', 'COMMA', 'FUNCTION'],
+            'FUNCTION': ['COLUMN', 'FROM', 'COMMA', 'FUNCTION'],
             'COMMA': ['COLUMN', 'FUNCTION'],
             'FROM': ['TABLE'],
             'TABLE': ['WHERE', 'JOIN', 'GROUP BY', 'ORDER BY', 'LIMIT', 'END'],
@@ -174,10 +174,28 @@ class SQLBlockBuilder {
         
         e.dataTransfer.effectAllowed = 'copy';
         block.classList.add('dragging');
+        
+        // Highlight function slots if dragging a column
+        if (this.blockCategories[blockType] === 'COLUMN') {
+            this.highlightFunctionSlots(true);
+        }
     }
     
     handleDragEnd(e) {
         e.target.classList.remove('dragging');
+        this.highlightFunctionSlots(false);
+    }
+    
+    // Highlight empty function parameter slots when dragging columns
+    highlightFunctionSlots(show) {
+        const emptySlots = this.canvas.querySelectorAll('.param-slot.empty');
+        emptySlots.forEach(slot => {
+            if (show) {
+                slot.closest('.canvas-block')?.classList.add('accepting-drop');
+            } else {
+                slot.closest('.canvas-block')?.classList.remove('accepting-drop');
+            }
+        });
     }
     
     handleDragOver(e) {
@@ -229,10 +247,8 @@ class SQLBlockBuilder {
         const lastBlock = this.blocks[this.blocks.length - 1];
         const type = lastBlock.type;
         
-        // Context-aware category detection
         const category = this.blockCategories[type] || 'UNKNOWN';
         
-        // Special handling for columns in different contexts
         if (category === 'COLUMN') {
             const prevBlocks = this.blocks.slice(0, -1);
             const lastKeyword = this.findLastKeyword(prevBlocks);
@@ -248,7 +264,6 @@ class SQLBlockBuilder {
             }
         }
         
-        // Special handling for values after operators
         if (category === 'VALUE') {
             return 'VALUE';
         }
@@ -272,17 +287,14 @@ class SQLBlockBuilder {
         
         const validNext = this.validConnections[lastCategory] || [];
         
-        // Check if the new block's category is in the valid connections
         if (validNext.includes(newCategory)) {
             return true;
         }
         
-        // Check if the exact type is valid
         if (validNext.includes(newBlockType)) {
             return true;
         }
         
-        // Special case: COMMA after columns
         if (newBlockType === ',' || newCategory === 'COMMA') {
             return lastCategory === 'COLUMN' || lastCategory === 'FUNCTION' || 
                    lastCategory === 'GROUP_COLUMN' || lastCategory === 'ORDER_COLUMN';
@@ -305,7 +317,6 @@ class SQLBlockBuilder {
         const label = this.friendlyLabels[blockType] || blockType;
         this.showMessage(`❌ Cannot add "${label}" here. Try a different block.`, 'error');
         
-        // Flash the canvas red briefly
         this.canvas.classList.add('connection-error');
         setTimeout(() => this.canvas.classList.remove('connection-error'), 500);
     }
@@ -332,7 +343,42 @@ class SQLBlockBuilder {
         const contentWrapper = document.createElement('div');
         contentWrapper.className = 'block-content';
         
-        if (data.type === 'number' || data.type === 'text') {
+        const currentCategory = this.blockCategories[data.type];
+        
+        // Handle FUNCTION blocks with parameter slots
+        if (currentCategory === 'FUNCTION') {
+            const functionName = data.type.replace('()', '');
+            
+            const label = document.createElement('span');
+            label.className = 'block-label';
+            label.textContent = this.friendlyLabels[data.type] || functionName;
+            contentWrapper.appendChild(label);
+            
+            const sqlLabel = document.createElement('span');
+            sqlLabel.className = 'block-sql';
+            sqlLabel.textContent = functionName;
+            contentWrapper.appendChild(sqlLabel);
+            
+            // Create parameter slot container
+            const paramsContainer = document.createElement('span');
+            paramsContainer.className = 'function-params';
+            
+            const paramSlot = document.createElement('div');
+            paramSlot.className = 'param-slot empty';
+            paramSlot.dataset.paramIndex = '0';
+            
+            const slotPlaceholder = document.createElement('span');
+            slotPlaceholder.className = 'slot-placeholder';
+            slotPlaceholder.textContent = 'column';
+            paramSlot.appendChild(slotPlaceholder);
+            
+            // Setup drop zone for this parameter slot
+            this.setupParamSlotDropZone(paramSlot, blockId);
+            
+            paramsContainer.appendChild(paramSlot);
+            contentWrapper.appendChild(paramsContainer);
+            
+        } else if (data.type === 'number' || data.type === 'text') {
             const label = document.createElement('span');
             label.className = 'block-label';
             label.textContent = data.type === 'number' ? '🔢' : '📝';
@@ -388,7 +434,8 @@ class SQLBlockBuilder {
             id: blockId,
             type: data.type,
             class: data.class,
-            element: blockEl
+            element: blockEl,
+            params: [] // Track parameters for functions
         });
         
         // Animate the connection
@@ -399,17 +446,131 @@ class SQLBlockBuilder {
         this.updateAvailableBlocks();
     }
     
+    // Setup drag-and-drop for function parameter slots
+    setupParamSlotDropZone(slotEl, parentBlockId) {
+        slotEl.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const data = e.dataTransfer.getData('text/plain');
+            if (data) {
+                try {
+                    const blockData = JSON.parse(data);
+                    const isColumn = this.blockCategories[blockData.type] === 'COLUMN';
+                    
+                    if (isColumn && slotEl.classList.contains('empty')) {
+                        slotEl.classList.add('drag-over');
+                    }
+                } catch (err) {}
+            }
+        });
+        
+        slotEl.addEventListener('dragleave', (e) => {
+            if (!slotEl.contains(e.relatedTarget)) {
+                slotEl.classList.remove('drag-over');
+            }
+        });
+        
+        slotEl.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            slotEl.classList.remove('drag-over');
+            
+            try {
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                const isColumn = this.blockCategories[data.type] === 'COLUMN';
+                
+                if (isColumn && slotEl.classList.contains('empty')) {
+                    this.addParameterToSlot(slotEl, data, parentBlockId);
+                }
+            } catch (err) {
+                console.error('Param drop error:', err);
+            }
+        });
+    }
+    
+    // Add a column parameter to a function slot
+    addParameterToSlot(slotEl, data, parentBlockId) {
+        // Remove placeholder
+        const placeholder = slotEl.querySelector('.slot-placeholder');
+        if (placeholder) {
+            placeholder.remove();
+        }
+        
+        slotEl.classList.remove('empty');
+        slotEl.classList.add('filled');
+        
+        // Create parameter block element
+        const paramBlock = document.createElement('div');
+        paramBlock.className = 'param-block';
+        paramBlock.dataset.type = data.type;
+        
+        const paramLabel = document.createElement('span');
+        paramLabel.className = 'param-label';
+        paramLabel.textContent = data.type;
+        paramBlock.appendChild(paramLabel);
+        
+        // Mini remove button
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-param';
+        removeBtn.innerHTML = '×';
+        removeBtn.title = 'Remove this parameter';
+        removeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.removeParameter(slotEl, parentBlockId);
+        });
+        paramBlock.appendChild(removeBtn);
+        
+        slotEl.appendChild(paramBlock);
+        
+        // Update parent block's params array
+        const parentBlock = this.blocks.find(b => b.id === parentBlockId);
+        if (parentBlock) {
+            parentBlock.params = [data.type];
+        }
+        
+        // Remove highlight from function
+        slotEl.closest('.canvas-block')?.classList.remove('accepting-drop');
+        
+        this.generateSQL();
+    }
+    
+    // Remove parameter from function slot
+    removeParameter(slotEl, parentBlockId) {
+        // Remove parameter block
+        const paramBlock = slotEl.querySelector('.param-block');
+        if (paramBlock) {
+            paramBlock.remove();
+        }
+        
+        // Reset slot state
+        slotEl.classList.add('empty');
+        slotEl.classList.remove('filled');
+        
+        // Restore placeholder
+        const placeholder = document.createElement('span');
+        placeholder.className = 'slot-placeholder';
+        placeholder.textContent = 'column';
+        slotEl.appendChild(placeholder);
+        
+        // Update parent block's params
+        const parentBlock = this.blocks.find(b => b.id === parentBlockId);
+        if (parentBlock) {
+            parentBlock.params = [];
+        }
+        
+        this.generateSQL();
+    }
+    
     removeBlockAndAfter(blockId) {
         const index = this.blocks.findIndex(b => b.id === blockId);
         if (index === -1) return;
         
-        // Remove this block and all blocks after it
         const blocksToRemove = this.blocks.slice(index);
         blocksToRemove.forEach(block => block.element.remove());
         
         this.blocks = this.blocks.slice(0, index);
         
-        // Update connector on new last block
         if (this.blocks.length > 0) {
             const lastBlock = this.blocks[this.blocks.length - 1].element;
             lastBlock.classList.remove('has-right-connector');
@@ -440,6 +601,14 @@ class SQLBlockBuilder {
             block.classList.toggle('block--disabled', !isValid);
             block.classList.toggle('block--available', isValid);
             block.draggable = isValid;
+            
+            // Add hint for columns that can be dropped into functions
+            const hasEmptyFunctionSlot = this.canvas.querySelector('.param-slot.empty') !== null;
+            if (category === 'COLUMN' && hasEmptyFunctionSlot) {
+                block.classList.add('can-drop-in-function');
+            } else {
+                block.classList.remove('can-drop-in-function');
+            }
         });
     }
     
@@ -454,23 +623,10 @@ class SQLBlockBuilder {
         this.blocks.forEach((block, index) => {
             const el = block.element;
             const type = block.type;
-            const nextBlock = this.blocks[index + 1];
             const prevBlock = this.blocks[index - 1];
             const currentCategory = this.blockCategories[type];
             
-            // Skip if already processed
-            if (block.processed) {
-                delete block.processed;
-                return;
-            }
-            
-            // Check if current block is a FUNCTION and next is a COLUMN
-            const isFunctionWithColumn = currentCategory === 'FUNCTION' && 
-                                    nextBlock && 
-                                    this.blockCategories[nextBlock.type] === 'COLUMN';
-            
-            // Check if we need to auto-insert comma
-            // (between consecutive columns/functions that aren't already separated by comma)
+            // Check if we need to auto-insert comma between columns/functions
             const needsAutoComma = index > 0 && 
                               (currentCategory === 'COLUMN' || currentCategory === 'FUNCTION') &&
                               prevBlock && 
@@ -478,7 +634,6 @@ class SQLBlockBuilder {
                                this.blockCategories[prevBlock.type] === 'FUNCTION') &&
                               prevBlock.type !== ',';
             
-            // Add auto-comma before this block if needed
             if (needsAutoComma) {
                 parts.push({ type: 'COMMA', value: ',' });
             }
@@ -502,13 +657,17 @@ class SQLBlockBuilder {
                 }
             } else if (type === ',') {
                 parts.push({ type: 'COMMA', value: ',' });
-            } else if (isFunctionWithColumn) {
-                // Handle FUNCTION with next COLUMN - insert column inside parentheses
+            } else if (currentCategory === 'FUNCTION') {
+                // Handle function with explicit parameters from slot
                 const functionName = type.replace('()', '');
-                const columnName = nextBlock.type;
-                parts.push(`${functionName}(${columnName})`);
-                // Skip the next block since we've already processed it
-                this.blocks[index + 1].processed = true;
+                const params = block.params || [];
+                
+                if (params.length > 0) {
+                    parts.push(`${functionName}(${params.join(', ')})`);
+                } else {
+                    // Empty function - show with empty parens
+                    parts.push(`${functionName}()`);
+                }
             } else {
                 parts.push(type);
             }
@@ -517,7 +676,6 @@ class SQLBlockBuilder {
         let sql = this.formatSQL(parts);
         this.output.textContent = sql;
         
-        // Validate complete query
         this.validateQuery(sql);
     }
     
