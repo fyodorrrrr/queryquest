@@ -451,10 +451,39 @@ class SQLBlockBuilder {
         
         const parts = [];
         
-        this.blocks.forEach(block => {
+        this.blocks.forEach((block, index) => {
             const el = block.element;
             const type = block.type;
+            const nextBlock = this.blocks[index + 1];
+            const prevBlock = this.blocks[index - 1];
+            const currentCategory = this.blockCategories[type];
             
+            // Skip if already processed
+            if (block.processed) {
+                delete block.processed;
+                return;
+            }
+            
+            // Check if current block is a FUNCTION and next is a COLUMN
+            const isFunctionWithColumn = currentCategory === 'FUNCTION' && 
+                                    nextBlock && 
+                                    this.blockCategories[nextBlock.type] === 'COLUMN';
+            
+            // Check if we need to auto-insert comma
+            // (between consecutive columns/functions that aren't already separated by comma)
+            const needsAutoComma = index > 0 && 
+                              (currentCategory === 'COLUMN' || currentCategory === 'FUNCTION') &&
+                              prevBlock && 
+                              (this.blockCategories[prevBlock.type] === 'COLUMN' || 
+                               this.blockCategories[prevBlock.type] === 'FUNCTION') &&
+                              prevBlock.type !== ',';
+            
+            // Add auto-comma before this block if needed
+            if (needsAutoComma) {
+                parts.push({ type: 'COMMA', value: ',' });
+            }
+            
+            // Process the current block
             if (type === 'number') {
                 const input = el.querySelector('.block-input');
                 const value = input ? input.value : '';
@@ -471,6 +500,15 @@ class SQLBlockBuilder {
                 } else {
                     parts.push("'?'");
                 }
+            } else if (type === ',') {
+                parts.push({ type: 'COMMA', value: ',' });
+            } else if (isFunctionWithColumn) {
+                // Handle FUNCTION with next COLUMN - insert column inside parentheses
+                const functionName = type.replace('()', '');
+                const columnName = nextBlock.type;
+                parts.push(`${functionName}(${columnName})`);
+                // Skip the next block since we've already processed it
+                this.blocks[index + 1].processed = true;
             } else {
                 parts.push(type);
             }
@@ -489,13 +527,26 @@ class SQLBlockBuilder {
         
         parts.forEach((part, index) => {
             const prevPart = parts[index - 1];
+            
+            // Handle comma objects
+            if (typeof part === 'object' && part.type === 'COMMA') {
+                sql += part.value; // Add comma without space before it
+                return;
+            }
+            
             const needsNewLine = newLineKeywords.includes(part);
             const needsSpace = index > 0 && 
                               !['(', ')'].includes(part) && 
-                              !['('].includes(prevPart);
+                              !['('].includes(prevPart) &&
+                              !(typeof prevPart === 'object' && prevPart.type === 'COMMA'); // No space after comma is already handled
+            
+            // Check if previous part was a comma - we need a space after it
+            const prevWasComma = typeof prevPart === 'object' && prevPart.type === 'COMMA';
             
             if (needsNewLine && index > 0) {
                 sql += '\n' + part;
+            } else if (prevWasComma) {
+                sql += ' ' + part; // Always add space after comma
             } else if (needsSpace) {
                 sql += ' ' + part;
             } else {
