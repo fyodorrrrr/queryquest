@@ -8,8 +8,28 @@
 </head>
 <body>
     <header class="header">
-        <h1 class="header__title">⚡ SQL Playground</h1>
-        <p class="header__subtitle">Build SQL queries with puzzle blocks - no syntax errors possible!</p>
+        <div class="header__brand">
+            <h1 class="header__title">QUERYQUEST</h1>
+        </div>
+        
+        <nav class="header__nav">
+            <a href="#" class="nav-item nav-item--active" data-page="play">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="nav-label">Play</span>
+            </a>
+            <a href="#" class="nav-item" data-page="about">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span class="nav-label">About</span>
+            </a>
+        </nav>
+        
+        <div class="header__spacer"></div>
     </header>
 
     <div class="container">
@@ -171,7 +191,6 @@
             </div>
         </main>
     </div>
-
     <script type="module" src="block-builder/index.js"></script>
 </body>
 </html>
