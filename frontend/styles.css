@@ -203,7 +203,7 @@ button {
 /* ========== BLOCK MENU STYLES ========== */
 .block-menu {
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 24px; /* Increased to complement container's 50px radius */
     padding: 1.25rem;
     overflow-y: auto;
     max-height: calc(100vh - 140px);
@@ -376,7 +376,7 @@ button {
 /* ========== BUILDER PANEL STYLES ========== */
 .builder-panel {
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 24px;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -419,8 +419,8 @@ button {
 .query-canvas {
     background: linear-gradient(135deg, var(--bg-input) 0%, #e2e8f0 100%);
     border: 3px dashed var(--border);
-    border-radius: 14px;
-    min-height: 160px;
+    border-radius: 16px;
+    min-height: 500px;
     padding: 1rem;
     display: flex;
     flex-wrap: wrap;
@@ -638,7 +638,7 @@ button {
 /* Generated SQL Panel */
 .generated-sql {
     background: var(--bg-body);
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
     transition: all 0.3s ease;
     border: 2px solid var(--border);
@@ -752,7 +752,7 @@ button {
 /* ========== RESULTS PANEL ========== */
 .results-panel {
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 24px;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -767,14 +767,14 @@ button {
     margin-bottom: 1rem;
     background: var(--bg-input);
     padding: 0.35rem;
-    border-radius: 10px;
+    border-radius: 14px;
 }
 
 .tab {
     padding: 0.6rem 1.25rem;
     background: transparent;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     color: var(--text-secondary);
     cursor: pointer;
     font-size: 0.9rem;
@@ -838,7 +838,7 @@ button {
 /* Results Table Styles */
 .results-table-wrapper {
     overflow-x: auto;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
 }
@@ -912,6 +912,7 @@ button {
     margin-top: auto;
     padding-top: 1rem;
     border-top: 1px solid var(--border);
+    border-radius: 12px;
 }
 
 .example-queries h3 {
@@ -951,6 +952,7 @@ button {
     font-weight: 700;
     font-size: 0.95rem;
     border-bottom: 1px solid var(--border);
+    border-radius: 12px 12px 0 0;
 }
 
 .column-list {
