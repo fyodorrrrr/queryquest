@@ -31,7 +31,120 @@ export class SQLBlockBuilder {
         this.dragDropManager.init();
         this.setupClearButton();
         this.setupRunButton();
+        this.setupTabs();
         this.updateAvailableBlocks();
+        this.loadInitialTables();
+    }
+    
+    /**
+     * Setup tab switching
+     */
+    setupTabs() {
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('tab-content-active'));
+                
+                tab.classList.add('tab-active');
+                const tabId = tab.dataset.tab;
+                document.getElementById(`${tabId}-tab`).classList.add('tab-content-active');
+            });
+        });
+    }
+    
+    /**
+     * Load and display initial tables (employees and departments)
+     */
+    async loadInitialTables() {
+        const resultsDiv = document.getElementById('results');
+        
+        // Create the initial tables structure
+        resultsDiv.innerHTML = `
+            <div class="initial-tables" id="initial-tables">
+                <div class="initial-table-card" id="employees-preview">
+                    <h4>👥 employees</h4>
+                    <div class="table-loading">Loading...</div>
+                </div>
+                <div class="initial-table-card" id="departments-preview">
+
+                    <h4>🏢 departments</h4>
+                    <div class="table-loading">Loading...</div>
+                </div>
+            </div>
+            <div id="query-result-container"></div>
+        `;
+        
+        // Fetch employees table
+        await this.fetchAndRenderTable('employees', 'employees-preview');
+        
+        // Fetch departments table
+        await this.fetchAndRenderTable('departments', 'departments-preview');
+    }
+    
+    /**
+     * Fetch and render a table preview
+     */
+    async fetchAndRenderTable(tableName, containerId) {
+        try {
+            const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.execute}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: `SELECT * FROM ${tableName}` })
+            });
+            const data = await response.json();
+            
+            if (data.success && data.rows) {
+                this.renderInitialTable(containerId, data.columns, data.rows);
+            } else {
+                this.setTableError(containerId, 'Failed to load');
+            }
+        } catch (error) {
+            this.setTableError(containerId, 'Connection error');
+        }
+    }
+    
+    /**
+     * Set error message for a table container
+     */
+    setTableError(containerId, message) {
+        const loadingEl = document.querySelector(`#${containerId} .table-loading`);
+        if (loadingEl) {
+            loadingEl.textContent = message;
+            loadingEl.classList.add('table-error');
+        }
+    }
+    
+    /**
+     * Render an initial table preview
+     */
+    renderInitialTable(containerId, columns, rows) {
+        const container = document.getElementById(containerId);
+        const loadingEl = container.querySelector('.table-loading');
+        
+        if (!loadingEl) return;
+        
+        if (!rows || rows.length === 0) {
+            loadingEl.textContent = 'No data';
+            return;
+        }
+        
+        let tableHtml = '<div class="mini-table-wrapper"><table class="mini-table"><thead><tr>';
+        columns.forEach(col => {
+            tableHtml += `<th>${col}</th>`;
+        });
+        tableHtml += '</tr></thead><tbody>';
+        
+        rows.forEach(row => {
+            tableHtml += '<tr>';
+            row.forEach(cell => {
+                tableHtml += `<td>${cell ?? '<span class="null-value">NULL</span>'}</td>`;
+            });
+            tableHtml += '</tr>';
+        });
+        
+        tableHtml += '</tbody></table></div>';
+        loadingEl.outerHTML = tableHtml;
     }
     
     /**
@@ -182,6 +295,22 @@ export class SQLBlockBuilder {
             return;
         }
         
+        // Switch to results tab
+        document.querySelector('[data-tab="results"]').click();
+        
+        const initialTables = document.getElementById('initial-tables');
+        const queryResultContainer = document.getElementById('query-result-container');
+        const resultsInfo = document.getElementById('results-info');
+        
+        // Show loading state
+        this.showMessage('Running query...', 'info');
+        queryResultContainer.innerHTML = '';
+        
+        // Remove dimmed state while loading
+        if (initialTables) {
+            initialTables.classList.remove('dimmed');
+        }
+        
         try {
             const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.execute}`, {
                 method: 'POST',
@@ -192,8 +321,20 @@ export class SQLBlockBuilder {
             const data = await response.json();
             
             if (data.success) {
-                this.displayResults(data);
                 this.showMessage(`✅ Query executed successfully! ${data.row_count} row(s) returned.`, 'success');
+                
+                // Dim the initial tables to highlight the result
+                if (initialTables) {
+                    initialTables.classList.add('dimmed');
+                }
+                
+                // Update results info
+                if (resultsInfo) {
+                    resultsInfo.innerHTML = `<span class="results-count">📊 ${data.row_count} row${data.row_count !== 1 ? 's' : ''} returned</span>`;
+                }
+                
+                // Display query result below initial tables
+                this.displayQueryResult(queryResultContainer, data, sql);
             } else {
                 this.showMessage(data.error, 'error');
             }
@@ -217,44 +358,62 @@ export class SQLBlockBuilder {
         }
     }
     
-    displayResults(data) {
-        const resultsContainer = document.getElementById('results');
-        const resultsInfo = document.getElementById('results-info');
-        
-        if (resultsInfo) {
-            resultsInfo.textContent = `${data.row_count} row(s) returned`;
-        }
-        
-        if (!resultsContainer) return;
+    /**
+     * Display query result in a dedicated section below initial tables
+     */
+    displayQueryResult(container, data, sql) {
+        if (!container) return;
         
         if (data.rows.length === 0) {
-            resultsContainer.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state__icon">📭</div>
-                    <p>No results found</p>
+            container.innerHTML = `
+                <div class="query-result-section">
+                    <h4>🎯 Query Result</h4>
+                    <div class="query-sql-display">${this.escapeHtml(sql)}</div>
+                    <div class="empty-result">
+                        <span>📭</span>
+                        <p>No rows returned</p>
+                    </div>
                 </div>
             `;
             return;
         }
         
-        resultsContainer.innerHTML = `
-            <div class="results-table-wrapper">
-                <table class="results-table">
-                    <thead>
-                        <tr>${data.columns.map(col => `<th>${col}</th>`).join('')}</tr>
-                    </thead>
-                    <tbody>
-                        ${data.rows.map(row => `
-                            <tr>
-                                ${row.map(cell => `
-                                    <td>${cell !== null ? cell : '<span class="null-value">NULL</span>'}</td>
-                                `).join('')}
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
+        container.innerHTML = `
+            <div class="query-result-section">
+                <h4>🎯 Query Result</h4>
+                <div class="query-sql-display">${this.escapeHtml(sql)}</div>
+                <div class="result-table-wrapper">
+                    <table class="result-table">
+                        <thead>
+                            <tr>${data.columns.map(col => `<th>${col}</th>`).join('')}</tr>
+                        </thead>
+                        <tbody>
+                            ${data.rows.map(row => `
+                                <tr>
+                                    ${row.map(cell => `
+                                        <td>${cell !== null ? cell : '<span class="null-value">NULL</span>'}</td>
+                                    `).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         `;
+    }
+    
+    /**
+     * Escape HTML to prevent XSS
+     */
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // Keep old displayResults for backwards compatibility
+    displayResults(data) {
+        this.displayQueryResult(document.getElementById('query-result-container'), data, this.output.textContent);
     }
 }
 
