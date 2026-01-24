@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SQL Playground</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
@@ -36,7 +39,7 @@
         <!-- LEFT: Block Menu -->
         <aside class="block-menu">
             <div class="block-menu__header">
-                <h2>🧩 Puzzle Blocks</h2>
+                <h2>Puzzle Blocks 🧩</h2>
                 <p style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem;">Drag available blocks to build</p>
             </div>
             
@@ -135,7 +138,7 @@
             
             <div id="query-canvas" class="query-canvas">
                 <div class="canvas-placeholder">
-                    <span>🧩 Drag blocks here to build your query</span>
+                    <span>Drag blocks here to build your query 🧩</span>
                     <br>
                     <small style="color: var(--text-secondary);">Start with SELECT</small>
                 </div>
@@ -143,13 +146,13 @@
             
             <div class="generated-sql">
                 <div class="generated-sql__header">
-                    <h3>📄 Generated SQL</h3>
+                    <h3>Generated SQL</h3>
                 </div>
                 <pre id="generated-sql-output" class="sql-output">-- Your query will appear here</pre>
             </div>
             
             <div class="controls">
-                <button class="btn btn-run btn--disabled" id="run-builder-btn" disabled>▶️ Run Query</button>
+                <button class="btn btn-run btn--disabled" id="run-builder-btn" disabled>Run Query</button>
             </div>
         </section>
 

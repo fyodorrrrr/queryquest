@@ -5,6 +5,9 @@
     box-sizing: border-box;
 }
 
+/* Import Public Sans from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
     /* Light theme colors */
     --primary: #6366f1;
@@ -37,7 +40,7 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
     
-    /* Block colors - vibrant but not harsh */
+    /* Block colors */
     --block-command: #6366f1;
     --block-command-light: #e0e7ff;
     --block-operator: #f59e0b;
@@ -52,8 +55,8 @@
     --block-value-light: #ede9fe;
     
     /* Typography */
-    --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Poppins', 'Consolas', 'Monaco', monospace;
 }
 
 body {
@@ -195,15 +198,10 @@ button {
     box-shadow: var(--shadow-lg);
 }
 
-/* ========== LEFT PANEL: Editor (hidden) ========== */
-.editor-panel {
-    display: none;
-}
-
 /* ========== BLOCK MENU STYLES ========== */
 .block-menu {
     background: var(--bg-card);
-    border-radius: 24px; /* Increased to complement container's 50px radius */
+    border-radius: 24px;
     padding: 1.25rem;
     overflow-y: auto;
     max-height: calc(100vh - 140px);
@@ -415,7 +413,7 @@ button {
     border-color: var(--error);
 }
 
-/* Query Canvas - Puzzle Board */
+/* Query Canvas */
 .query-canvas {
     background: linear-gradient(135deg, var(--bg-input) 0%, #e2e8f0 100%);
     border: 3px dashed var(--border);
@@ -462,7 +460,6 @@ button {
 
 .canvas-placeholder {
     width: 100%;
-    text-align: center;
     color: var(--text-secondary);
     font-size: 0.95rem;
     padding: 2rem;
@@ -605,6 +602,7 @@ button {
     color: white; 
     border-radius: 8px 16px 16px 8px;
 }
+
 .canvas-block.block--operator { 
     background: linear-gradient(135deg, var(--block-operator) 0%, #d97706 100%);
     color: #1e293b; 
@@ -612,19 +610,23 @@ button {
     padding: 0.4rem 0.65rem;
     padding-right: 1.6rem;
 }
+
 .canvas-block.block--function { 
     background: linear-gradient(135deg, var(--block-function) 0%, #059669 100%);
     color: white; 
 }
+
 .canvas-block.block--table { 
     background: linear-gradient(135deg, var(--block-table) 0%, #db2777 100%);
     color: white; 
     border-radius: 6px 6px 12px 12px;
 }
+
 .canvas-block.block--column { 
     background: linear-gradient(135deg, var(--block-column) 0%, #0891b2 100%);
     color: white; 
 }
+
 .canvas-block.block--value { 
     background: linear-gradient(135deg, var(--block-value) 0%, #7c3aed 100%);
     color: white; 
@@ -806,10 +808,6 @@ button {
     flex-direction: column;
 }
 
-#message {
-    margin-bottom: 1rem;
-}
-
 .message-success {
     background: var(--success-light);
     border: 1px solid var(--success);
@@ -982,37 +980,6 @@ button {
     color: var(--text-secondary);
     font-size: 0.8rem;
     font-family: var(--font-mono);
-}
-
-.col-constraint {
-    color: var(--warning);
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-left: 0.5rem;
-    background: var(--warning-light);
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-}
-
-/* ========== NO RESULTS STATE ========== */
-.no-results {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 3rem 2rem;
-    background: var(--bg-card);
-    border-radius: 12px;
-    border: 2px dashed var(--border);
-}
-
-.no-results__icon {
-    font-size: 3rem;
-    margin-bottom: 0.75rem;
-    opacity: 0.6;
-}
-
-.no-results__text {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
 }
 
 /* ========== SCROLLBAR ========== */
@@ -1504,7 +1471,6 @@ button {
     animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     font-size: 0.9rem;
     font-weight: 500;
-    /* Set the end state immediately */
     opacity: 1;
     transform: translateX(0) scale(1);
 }
@@ -1637,7 +1603,7 @@ button {
     }
 }
 
-/* Hide the old inline message area but keep for fallback */
+/* Hide the old inline message area */
 #message {
     display: none;
 }
