@@ -459,10 +459,15 @@ button {
 }
 
 .canvas-placeholder {
-    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
     color: var(--text-secondary);
     font-size: 0.95rem;
     padding: 2rem;
+    pointer-events: none;
 }
 
 .canvas-placeholder small {
@@ -758,7 +763,8 @@ button {
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    /* overflow: hidden; */
+    overflow-y: auto;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border);
 }
