@@ -34,6 +34,18 @@ export class SQLBlockBuilder {
         this.setupTabs();
         this.updateAvailableBlocks();
         this.loadInitialTables();
+        this.createToastContainer();
+    }
+    
+    /**
+     * Create toast notification container
+     */
+    createToastContainer() {
+        if (!document.querySelector('.toast-container')) {
+            const container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
     }
     
     /**
@@ -67,7 +79,6 @@ export class SQLBlockBuilder {
                     <div class="table-loading">Loading...</div>
                 </div>
                 <div class="initial-table-card" id="departments-preview">
-
                     <h4>🏢 departments</h4>
                     <div class="table-loading">Loading...</div>
                 </div>
@@ -211,7 +222,7 @@ export class SQLBlockBuilder {
      */
     showConnectionError(blockType) {
         const label = getFriendlyLabel(blockType);
-        this.showMessage(`❌ Cannot add "${label}" here. Try a different block.`, 'error');
+        this.showToast(`Cannot add "${label}" here. Try a different block.`, 'error');
         
         this.canvas.classList.add('connection-error');
         setTimeout(() => this.canvas.classList.remove('connection-error'), 500);
@@ -286,12 +297,12 @@ export class SQLBlockBuilder {
         const sql = this.output.textContent;
         
         if (sql === '-- Your query will appear here' || !sql.trim()) {
-            this.showMessage('Please build a query first', 'error');
+            this.showToast('Please build a query first', 'error');
             return;
         }
         
         if (!this.sqlGenerator.isQueryComplete()) {
-            this.showMessage('Please complete your query (need SELECT, columns, FROM, and a table)', 'error');
+            this.showToast('Please complete your query (need SELECT, columns, FROM, and a table)', 'error');
             return;
         }
         
@@ -301,9 +312,6 @@ export class SQLBlockBuilder {
         const initialTables = document.getElementById('initial-tables');
         const queryResultContainer = document.getElementById('query-result-container');
         const resultsInfo = document.getElementById('results-info');
-        
-        // Show loading state
-        this.showMessage('Running query...', 'info');
         queryResultContainer.innerHTML = '';
         
         // Remove dimmed state while loading
@@ -319,9 +327,9 @@ export class SQLBlockBuilder {
             });
             
             const data = await response.json();
-            
+
             if (data.success) {
-                this.showMessage(`✅ Query executed successfully! ${data.row_count} row(s) returned.`, 'success');
+                this.showToast(`Query executed successfully! ${data.row_count} row(s) returned.`, 'success');
                 
                 // Dim the initial tables to highlight the result
                 if (initialTables) {
@@ -336,26 +344,79 @@ export class SQLBlockBuilder {
                 // Display query result below initial tables
                 this.displayQueryResult(queryResultContainer, data, sql);
             } else {
-                this.showMessage(data.error, 'error');
+                this.showToast(data.error || 'Query failed', 'error');
             }
         } catch (error) {
-            this.showMessage('Failed to connect to server. Make sure the backend is running.', 'error');
+            this.removeToast(loadingToast);
+            this.showToast('Failed to connect to server. Make sure the backend is running.', 'error');
         }
     }
     
-    // === UI helpers ===
+    // === Toast notification system ===
     
-    showMessage(text, type) {
-        const messageEl = document.getElementById('message');
-        if (messageEl) {
-            messageEl.innerHTML = `<div class="message-${type}">${text}</div>`;
-            
-            if (type === 'success') {
-                setTimeout(() => {
-                    messageEl.innerHTML = '';
-                }, 5000);
-            }
+    /**
+     * Show a floating toast notification
+     * @param {string} message - The message to display
+     * @param {string} type - 'success', 'error', or 'info'
+     * @param {boolean} autoClose - Whether to auto-close (default: true)
+     * @returns {HTMLElement} The toast element
+     */
+    showToast(message, type = 'info', autoClose = true) {
+        const container = document.querySelector('.toast-container');
+        if (!container) return null;
+        
+        const icons = {
+            success: '✅',
+            error: '❌',
+            info: '⏳'
+        };
+        
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `
+            <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
+            <span class="toast-message">${message}</span>
+            <button class="toast-close" aria-label="Close">×</button>
+        `;
+        
+        // Close button handler
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            this.removeToast(toast);
+        });
+        
+        container.appendChild(toast);
+        
+        // Auto close after delay
+        if (autoClose) {
+            const delay = type === 'error' ? 5000 : 3000;
+            setTimeout(() => {
+                this.removeToast(toast);
+            }, delay);
         }
+        
+        return toast;
+    }
+    
+    /**
+     * Remove a toast with animation
+     * @param {HTMLElement} toast - The toast element to remove
+     */
+    removeToast(toast) {
+        if (!toast || !toast.parentElement) return;
+        
+        toast.classList.add('toast-exit');
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.remove();
+            }
+        }, 300);
+    }
+    
+    /**
+     * Show message (legacy method for backwards compatibility)
+     */
+    showMessage(text, type) {
+        this.showToast(text, type);
     }
     
     /**
