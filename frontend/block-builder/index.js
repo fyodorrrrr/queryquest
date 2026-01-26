@@ -3,6 +3,7 @@ import { DragDropManager } from './drag-drop.js';
 import { CanvasManager } from './canvas.js';
 import { SQLGenerator } from './sql-generator.js';
 import { getFriendlyLabel } from './utils.js';
+import { getTooltip } from './tooltips.js';
 
 /**
  * Main SQL Block Builder class
@@ -28,6 +29,7 @@ export class SQLBlockBuilder {
      */
     init() {
         this.setupBlockLabels();
+        this.applyTooltips();  // Add this line
         this.dragDropManager.init();
         this.setupClearButton();
         this.setupRunButton();
@@ -35,6 +37,18 @@ export class SQLBlockBuilder {
         this.updateAvailableBlocks();
         this.loadInitialTables();
         this.createToastContainer();
+    }
+    
+    /**
+     * Apply tooltips to all blocks in the block menu
+     */
+    applyTooltips() {
+        const blocks = document.querySelectorAll('.block-menu .block');
+        blocks.forEach(block => {
+            const blockType = block.getAttribute('data-type');
+            const tooltip = getTooltip(blockType);
+            block.setAttribute('data-tooltip', tooltip);
+        });
     }
     
     /**
