@@ -763,10 +763,10 @@ button {
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
-    /* overflow: hidden; */
-    overflow-y: auto;
+    overflow: hidden;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border);
+    max-height: calc(100vh - 140px);
 }
 
 .tabs {
@@ -776,6 +776,7 @@ button {
     background: var(--bg-input);
     padding: 0.35rem;
     border-radius: 14px;
+    flex-shrink: 0;
 }
 
 .tab {
@@ -807,6 +808,8 @@ button {
     display: none;
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
 }
 
 .tab-content-active {
