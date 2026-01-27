@@ -1659,11 +1659,11 @@ button {
     display: none;
 }
 
-/* Hide tooltip when dragging */
-.block.dragging[data-tooltip]::before,
-.block.dragging[data-tooltip]::after {
-    opacity: 0 !important; 
+.block:active[data-tooltip]::before,
+.block:active[data-tooltip]::after {
+    opacity: 0 !important;
     visibility: hidden !important;
+    display: none;
 }
 
 /* Also hide tooltip on canvas blocks */

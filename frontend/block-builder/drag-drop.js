@@ -55,6 +55,7 @@ export class DragDropManager {
         const dragData = extractDragData(block);
         event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
         event.dataTransfer.effectAllowed = 'copy';
+        console.log("DRAGGING")
         block.classList.add('dragging');
         
         // Highlight function slots when dragging a column
