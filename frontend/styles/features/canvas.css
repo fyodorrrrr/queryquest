@@ -1,0 +1,72 @@
+/**
+ * Query Canvas Styles
+ */
+
+.query-canvas {
+    background: linear-gradient(135deg, var(--bg-input) 0%, #e2e8f0 100%);
+    border: 3px dashed var(--border);
+    border-radius: var(--radius-lg);
+    min-height: 500px;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-content: flex-start;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Canvas States */
+.query-canvas.drag-over {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary);
+    border-style: solid;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.query-canvas.drag-valid {
+    border-color: var(--success);
+    background: linear-gradient(135deg, var(--success-light) 0%, #bbf7d0 100%);
+    box-shadow: inset 0 0 20px rgba(34, 197, 94, 0.15);
+}
+
+.query-canvas.drag-invalid {
+    border-color: var(--error);
+    background: linear-gradient(135deg, var(--error-light) 0%, #fecaca 100%);
+    box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.15);
+}
+
+.query-canvas.connection-error {
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+}
+
+/* Canvas Placeholder */
+.canvas-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    padding: 2rem;
+    pointer-events: none;
+}
+
+.canvas-placeholder small {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.query-canvas:not(:empty):has(.canvas-block) .canvas-placeholder {
+    display: none;
+}

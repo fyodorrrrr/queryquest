@@ -1,0 +1,208 @@
+/**
+ * Table Styles
+ */
+
+/* ========== Results Table ========== */
+.results-table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.results-table thead {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    position: sticky;
+    top: 0;
+}
+
+.results-table th {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    letter-spacing: 0.025em;
+}
+
+.results-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+}
+
+.results-table tbody tr:hover {
+    background: var(--primary-light);
+}
+
+.results-table tbody tr:nth-child(even) {
+    background: var(--bg-body);
+}
+
+.results-table tbody tr:nth-child(even):hover {
+    background: var(--primary-light);
+}
+
+.results-table td {
+    padding: 0.85rem 1rem;
+    color: var(--text-primary);
+}
+
+.results-table .null-value {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+/* ========== Mini Table (Preview) ========== */
+.mini-table-wrapper {
+    overflow-x: auto;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.7rem;
+}
+
+.mini-table th,
+.mini-table td {
+    padding: 0.35rem 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.mini-table th {
+    background: var(--bg-input);
+    color: var(--text-secondary);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.mini-table td {
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.mini-table tr:hover td {
+    background: var(--bg-hover);
+}
+
+/* ========== Result Table ========== */
+.result-table-wrapper {
+    overflow-x: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 12px;
+    border: 2px solid var(--primary);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.result-table thead {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    position: sticky;
+    top: 0;
+}
+
+.result-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+}
+
+.result-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.result-table tr:hover td {
+    background: var(--primary-light);
+}
+
+.result-table tr:nth-child(even) td {
+    background: var(--bg-body);
+}
+
+.result-table tr:nth-child(even):hover td {
+    background: var(--primary-light);
+}
+
+/* ========== Schema Table Box ========== */
+.table-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.table-header {
+    background: var(--bg-input);
+    padding: 0.85rem 1rem;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--border);
+    border-radius: 12px 12px 0 0;
+}
+
+.column-list {
+    padding: 0;
+}
+
+.column-item {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.column-item:first-child {
+    border-top: none;
+}
+
+.col-name {
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.col-type {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+}
+
+/* ========== Null Value ========== */
+.null-value {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.8em;
+}

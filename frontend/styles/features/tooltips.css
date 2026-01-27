@@ -1,0 +1,81 @@
+/**
+ * Block Tooltip Styles
+ */
+
+.block[data-tooltip]::before,
+.block[data-tooltip]::after {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    z-index: 1000;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Tooltip text box */
+.block[data-tooltip]::after {
+    content: attr(data-tooltip);
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1e293b;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    white-space: normal;
+    width: max-content;
+    max-width: 220px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    line-height: 1.4;
+}
+
+/* Tooltip arrow */
+.block[data-tooltip]::before {
+    content: '';
+    bottom: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    border: 6px solid transparent;
+    border-top-color: #1e293b;
+}
+
+/* Show tooltip on hover */
+.block[data-tooltip]:hover::before,
+.block[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Hide tooltip on disabled blocks */
+.block--disabled[data-tooltip]:hover::before,
+.block--disabled[data-tooltip]:hover::after {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Hide tooltip when dragging */
+.block.dragging[data-tooltip]::before,
+.block.dragging[data-tooltip]::after {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Hide tooltip on active/clicking */
+.block:active[data-tooltip]::before,
+.block:active[data-tooltip]::after {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none;
+}
+
+/* Hide tooltip on canvas blocks */
+.canvas-block[data-tooltip]::before,
+.canvas-block[data-tooltip]::after {
+    display: none !important;
+}

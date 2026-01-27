@@ -1,0 +1,77 @@
+/**
+ * CSS Custom Properties (Variables)
+ * Central place for all design tokens
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    /* ========== Colors ========== */
+    
+    /* Primary palette */
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #e0e7ff;
+    
+    /* Semantic colors */
+    --success: #22c55e;
+    --success-light: #dcfce7;
+    --error: #ef4444;
+    --error-light: #fee2e2;
+    --warning: #f59e0b;
+    --warning-light: #fef3c7;
+    
+    /* Background colors */
+    --bg-body: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-input: #f1f5f9;
+    --bg-hover: #e2e8f0;
+    --bg-primary: #1a1a2e;
+    
+    /* Text colors */
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    
+    /* Border colors */
+    --border: #e2e8f0;
+    --border-focus: #6366f1;
+    --border-color: #2d2d44;
+    
+    /* ========== Shadows ========== */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    
+    /* ========== Block Colors ========== */
+    --block-command: #6366f1;
+    --block-command-light: #e0e7ff;
+    --block-operator: #f59e0b;
+    --block-operator-light: #fef3c7;
+    --block-function: #10b981;
+    --block-function-light: #d1fae5;
+    --block-table: #ec4899;
+    --block-table-light: #fce7f3;
+    --block-column: #0891b2;
+    --block-column-light: #cffafe;
+    --block-value: #8b5cf6;
+    --block-value-light: #ede9fe;
+    
+    /* ========== Typography ========== */
+    --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Poppins', 'Consolas', 'Monaco', monospace;
+    
+    /* ========== Spacing ========== */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    /* ========== Border Radius ========== */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 50px;
+}

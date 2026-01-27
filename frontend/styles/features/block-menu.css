@@ -1,0 +1,57 @@
+/**
+ * Block Menu Sidebar Styles
+ */
+
+.block-menu {
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+}
+
+.block-menu__header h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.block-menu__header p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.block-category {
+    margin-bottom: 1.5rem;
+}
+
+.block-category__title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.75px;
+    font-weight: 700;
+}
+
+.block-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .block-menu {
+        max-height: 280px;
+    }
+    
+    .block-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}

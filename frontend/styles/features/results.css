@@ -1,0 +1,214 @@
+/**
+ * Results Panel Styles
+ */
+
+/* ========== Messages ========== */
+.message-success {
+    background: var(--success-light);
+    border: 1px solid var(--success);
+    color: #166534;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+}
+
+.message-error {
+    background: var(--error-light);
+    border: 1px solid var(--error);
+    color: #991b1b;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+}
+
+.message-info {
+    background: var(--primary-light);
+    border: 1px solid var(--primary);
+    color: var(--primary-dark);
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+}
+
+/* ========== Results Info ========== */
+.results-info {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.results-count {
+    font-size: 0.85rem;
+    color: var(--primary);
+    font-weight: 600;
+    background: var(--primary-light);
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* ========== Empty State ========== */
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-secondary);
+}
+
+.empty-state__icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+}
+
+.empty-state p {
+    font-size: 0.95rem;
+}
+
+.empty-result {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+
+.empty-result span {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.empty-result p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* ========== Example Queries ========== */
+.example-queries {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.example-queries h3 {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.example-query {
+    display: block;
+    background: var(--bg-input);
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+    cursor: default;
+    font-family: var(--font-mono);
+    border: 1px solid var(--border);
+}
+
+/* ========== Initial Tables Section ========== */
+.initial-tables {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    transition: opacity 0.3s ease;
+}
+
+.initial-tables.dimmed {
+    opacity: 0.45;
+}
+
+.initial-table-card {
+    flex: 1;
+    min-width: 180px;
+    max-width: 50%;
+    background: var(--bg-body);
+    border-radius: 12px;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+}
+
+.initial-table-card .table-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.initial-table-card h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.initial-table-card .table-loading {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.initial-table-card .table-loading.table-error {
+    color: var(--error);
+}
+
+/* ========== Query Result Section ========== */
+.query-result-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px dashed var(--border);
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.query-result-section h4 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.query-sql-display {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    background: var(--bg-input);
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 600px) {
+    .initial-tables {
+        flex-direction: column;
+    }
+    
+    .initial-table-card {
+        max-width: 100%;
+    }
+}

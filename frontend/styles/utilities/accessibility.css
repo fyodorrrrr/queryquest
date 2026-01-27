@@ -1,0 +1,52 @@
+/**
+ * Accessibility Styles
+ */
+
+/* ========== Focus States ========== */
+.block:focus-visible,
+.btn:focus-visible,
+.tab:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.block-input:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 1px;
+}
+
+/* ========== High Contrast Mode ========== */
+@media (prefers-contrast: high) {
+    :root {
+        --border: #475569;
+        --text-secondary: #475569;
+    }
+    
+    .block {
+        border: 2px solid rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* ========== Reduced Motion ========== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ========== Screen Reader Only ========== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

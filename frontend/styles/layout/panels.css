@@ -1,0 +1,121 @@
+/**
+ * Panel Layout Styles
+ */
+
+/* Builder Panel */
+.builder-panel {
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+}
+
+.builder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.builder-header h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Results Panel */
+.results-panel {
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    max-height: calc(100vh - 140px);
+}
+
+/* Generated SQL Panel */
+.generated-sql {
+    background: var(--bg-body);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid var(--border);
+}
+
+.generated-sql.sql-valid {
+    border-color: var(--success);
+    background: var(--success-light);
+}
+
+.generated-sql.sql-incomplete {
+    border-color: var(--warning);
+    background: var(--warning-light);
+}
+
+.generated-sql__header {
+    background: var(--bg-input);
+    padding: 0.6rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.generated-sql.sql-valid .generated-sql__header {
+    background: #bbf7d0;
+    border-bottom-color: var(--success);
+}
+
+.generated-sql.sql-incomplete .generated-sql__header {
+    background: #fde68a;
+    border-bottom-color: var(--warning);
+}
+
+.generated-sql__header h3 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.generated-sql.sql-valid .generated-sql__header h3 {
+    color: #166534;
+}
+
+.generated-sql.sql-incomplete .generated-sql__header h3 {
+    color: #92400e;
+}
+
+.sql-output {
+    padding: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-break: break-all;
+    min-height: 60px;
+    margin: 0;
+    line-height: 1.7;
+    background: white;
+}
+
+.sql-valid .sql-output {
+    color: #166534;
+    background: #f0fdf4;
+}
+
+.sql-incomplete .sql-output {
+    color: #92400e;
+    background: #fffbeb;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 0.75rem;
+}
