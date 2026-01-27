@@ -10,6 +10,9 @@ export class DragDropManager {
     constructor(builder) {
         this.builder = builder;
         this.canvas = builder.canvas;
+        this.dropSound = new Audio('sounds/pop.mp3'); 
+        this.dropSound.volume = 0.5;
+        
     }
     
     /**
@@ -128,6 +131,7 @@ export class DragDropManager {
         
         if (this.builder.canConnect(data.type)) {
             this.builder.addBlockToCanvas(data);
+            this.playDropSound();
         } else {
             this.builder.showConnectionError(data.type);
         }
@@ -190,5 +194,17 @@ export class DragDropManager {
         if (isColumn(data.type) && slotEl.classList.contains('empty')) {
             this.builder.addParameterToSlot(slotEl, data, parentBlockId);
         }
+    }
+
+    /**
+     * Play drop sound effect
+     */
+    playDropSound() {
+        // Clone and play to allow rapid consecutive sounds
+        const sound = this.dropSound.cloneNode();
+        sound.volume = this.dropSound.volume;
+        sound.play().catch(err => {
+            console.log('Audio play prevented:', err);
+        });
     }
 }
