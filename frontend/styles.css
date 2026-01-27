@@ -22,7 +22,7 @@
 /* Features */
 @import url('./styles/features/block-menu.css');
 @import url('./styles/features/canvas.css');
-@import url('./styles/features/results.css');
+@import url('./styles/features/results-dashboard.css');
 @import url('./styles/features/tooltips.css');
 
 /* Utilities */

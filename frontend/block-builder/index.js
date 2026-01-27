@@ -85,26 +85,144 @@ export class SQLBlockBuilder {
     async loadInitialTables() {
         const resultsDiv = document.getElementById('results');
         
-        // Create the initial tables structure
+        // Create the new dashboard structure
         resultsDiv.innerHTML = `
-            <div class="initial-tables" id="initial-tables">
-                <div class="initial-table-card" id="employees-preview">
-                    <h4>👥 employees</h4>
-                    <div class="table-loading">Loading...</div>
+            <div class="results-dashboard">
+                <!-- Stats Bar -->
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-icon">📊</span>
+                        <div class="stat-content">
+                            <span class="stat-label">Tables Available</span>
+                            <span class="stat-value">2</span>
+                        </div>
+                    </div>
+                    <div class="stat-item stat-highlight" id="result-stat">
+                        <span class="stat-icon">🎯</span>
+                        <div class="stat-content">
+                            <span class="stat-label">Rows Returned</span>
+                            <span class="stat-value" id="row-count-display">--</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="initial-table-card" id="departments-preview">
-                    <h4>🏢 departments</h4>
-                    <div class="table-loading">Loading...</div>
+
+                <!-- Source Data Section (Collapsible) -->
+                <section class="dashboard-section source-section" id="source-section">
+                    <div class="section-header">
+                        <div class="section-header-content">
+                            <h3>📁 Source Data</h3>
+                            <p class="section-subtitle">Tables you can query</p>
+                        </div>
+                        <button class="toggle-btn" id="toggle-source" title="Toggle source data">
+                            <span>Hide</span>
+                            <span class="toggle-icon">▲</span>
+                        </button>
+                    </div>
+                    <div class="section-body collapsible-content" id="source-content">
+                        <div class="table-grid">
+                            <div class="mini-table-card" id="employees-preview">
+                                <div class="mini-table-header">
+                                    <span>👥</span> 
+                                    <span>employees</span>
+                                    <span class="row-badge" id="employees-count">...</span>
+                                </div>
+                                <div class="mini-table-body">
+                                    <div class="table-loading">
+                                        <span class="loading-spinner"></span>
+                                        Loading...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mini-table-card" id="departments-preview">
+                                <div class="mini-table-header">
+                                    <span>🏢</span> 
+                                    <span>departments</span>
+                                    <span class="row-badge" id="departments-count">...</span>
+                                </div>
+                                <div class="mini-table-body">
+                                    <div class="table-loading">
+                                        <span class="loading-spinner"></span>
+                                        Loading...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Visual Flow Indicator -->
+                <div class="flow-indicator" id="flow-indicator">
+                    <div class="flow-line"></div>
+                    <div class="flow-arrow">
+                        <span>⬇️</span>
+                        <span>Your query transforms this data</span>
+                    </div>
+                    <div class="flow-line"></div>
                 </div>
+
+                <!-- Query Result Section -->
+                <section class="dashboard-section result-section">
+                    <div class="section-header">
+                        <div class="section-header-content">
+                            <h3>✨ Query Result</h3>
+                            <p class="section-subtitle">Output from your SQL</p>
+                        </div>
+                    </div>
+                    <div class="section-body" id="query-result-container">
+                        <div class="placeholder-message">
+                            <div class="placeholder-icon">🔮</div>
+                            <h4>Run a query to see results</h4>
+                            <p>Build your query using blocks, then click "Run Query"</p>
+                        </div>
+                    </div>
+                </section>
             </div>
-            <div id="query-result-container"></div>
         `;
         
-        // Fetch employees table
-        await this.fetchAndRenderTable('employees', 'employees-preview');
+        // Setup toggle functionality
+        this.setupSourceToggle();
         
-        // Fetch departments table
+        // Fetch and render tables
+        await this.fetchAndRenderTable('employees', 'employees-preview');
         await this.fetchAndRenderTable('departments', 'departments-preview');
+    }
+    
+    /**
+     * Setup source data toggle button
+     */
+    setupSourceToggle() {
+        const toggleBtn = document.getElementById('toggle-source');
+        const sourceContent = document.getElementById('source-content');
+        const sourceSection = document.getElementById('source-section');
+        
+        if (!toggleBtn || !sourceContent) return;
+        
+        toggleBtn.addEventListener('click', () => {
+            const isCollapsed = sourceContent.classList.toggle('collapsed');
+            toggleBtn.classList.toggle('collapsed', isCollapsed);
+            sourceSection.classList.toggle('collapsed', isCollapsed);
+            
+            // Update button text
+            const textSpan = toggleBtn.querySelector('span:first-child');
+            if (textSpan) {
+                textSpan.textContent = isCollapsed ? 'Show' : 'Hide';
+            }
+        });
+    }
+    
+    /**
+     * Dim source data section (call after query runs)
+     */
+    dimSourceData(dim = true) {
+        const sourceSection = document.getElementById('source-section');
+        const flowIndicator = document.getElementById('flow-indicator');
+        
+        if (sourceSection) {
+            sourceSection.classList.toggle('dimmed', dim);
+        }
+        if (flowIndicator) {
+            flowIndicator.classList.toggle('dimmed', dim);
+        }
     }
     
     /**
@@ -121,6 +239,11 @@ export class SQLBlockBuilder {
             
             if (data.success && data.rows) {
                 this.renderInitialTable(containerId, data.columns, data.rows);
+                // Update row count badge
+                const countBadge = document.getElementById(`${tableName}-count`);
+                if (countBadge) {
+                    countBadge.textContent = `${data.rows.length} rows`;
+                }
             } else {
                 this.setTableError(containerId, 'Failed to load');
             }
@@ -133,10 +256,19 @@ export class SQLBlockBuilder {
      * Set error message for a table container
      */
     setTableError(containerId, message) {
-        const loadingEl = document.querySelector(`#${containerId} .table-loading`);
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        const loadingEl = container.querySelector('.table-loading');
+        const countBadge = document.getElementById(`${containerId.replace('-preview', '')}-count`);
+        
         if (loadingEl) {
-            loadingEl.textContent = message;
-            loadingEl.classList.add('table-error');
+            loadingEl.innerHTML = `<span style="color: var(--error);">❌ ${message}</span>`;
+        }
+        if (countBadge) {
+            countBadge.textContent = 'error';
+            countBadge.style.background = 'var(--error-light)';
+            countBadge.style.color = 'var(--error)';
         }
     }
     
@@ -145,31 +277,33 @@ export class SQLBlockBuilder {
      */
     renderInitialTable(containerId, columns, rows) {
         const container = document.getElementById(containerId);
-        const loadingEl = container.querySelector('.table-loading');
+        const bodyEl = container?.querySelector('.mini-table-body');
         
-        if (!loadingEl) return;
+        if (!bodyEl) return;
         
         if (!rows || rows.length === 0) {
-            loadingEl.textContent = 'No data';
+            bodyEl.innerHTML = '<div class="table-loading">No data</div>';
             return;
         }
         
-        let tableHtml = '<div class="mini-table-wrapper"><table class="mini-table"><thead><tr>';
+        // Build compact table
+        let tableHtml = '<table class="preview-table"><thead><tr>';
         columns.forEach(col => {
-            tableHtml += `<th>${col}</th>`;
+            tableHtml += `<th>${this.escapeHtml(col)}</th>`;
         });
         tableHtml += '</tr></thead><tbody>';
         
         rows.forEach(row => {
             tableHtml += '<tr>';
             row.forEach(cell => {
-                tableHtml += `<td>${cell ?? '<span class="null-value">NULL</span>'}</td>`;
+                const displayValue = cell !== null ? this.escapeHtml(String(cell)) : '<span class="null-value">NULL</span>';
+                tableHtml += `<td>${displayValue}</td>`;
             });
             tableHtml += '</tr>';
         });
         
-        tableHtml += '</tbody></table></div>';
-        loadingEl.outerHTML = tableHtml;
+        tableHtml += '</tbody></table>';
+        bodyEl.innerHTML = tableHtml;
     }
     
     /**
@@ -434,19 +568,39 @@ export class SQLBlockBuilder {
     }
     
     /**
-     * Display query result in a dedicated section below initial tables
+     * Display query result in the dashboard
      */
     displayQueryResult(container, data, sql) {
         if (!container) return;
         
+        // Dim the source data to focus on results
+        this.dimSourceData(true);
+        
+        // Update row count display in stats bar
+        const rowCountDisplay = document.getElementById('row-count-display');
+        if (rowCountDisplay) {
+            rowCountDisplay.textContent = data.rows.length;
+        }
+        
+        // Pulse animation on stat
+        const resultStat = document.getElementById('result-stat');
+        if (resultStat && data.rows.length > 0) {
+            resultStat.style.animation = 'none';
+            resultStat.offsetHeight;
+            resultStat.style.animation = 'pulse 0.5s ease';
+        }
+        
         if (data.rows.length === 0) {
             container.innerHTML = `
-                <div class="query-result-section">
-                    <h4>🎯 Query Result</h4>
-                    <div class="query-sql-display">${this.escapeHtml(sql)}</div>
+                <div class="result-content">
+                    <div class="sql-display">
+                        <span class="sql-label">✅ Executed SQL:</span>
+                        <code>${this.escapeHtml(sql)}</code>
+                    </div>
                     <div class="empty-result">
-                        <span>📭</span>
-                        <p>No rows returned</p>
+                        <span class="empty-icon">📭</span>
+                        <h4>No rows returned</h4>
+                        <p>Query ran successfully but matched no data</p>
                     </div>
                 </div>
             `;
@@ -454,19 +608,24 @@ export class SQLBlockBuilder {
         }
         
         container.innerHTML = `
-            <div class="query-result-section">
-                <h4>🎯 Query Result</h4>
-                <div class="query-sql-display">${this.escapeHtml(sql)}</div>
+            <div class="result-content">
+                <div class="sql-display">
+                    <span class="sql-label">✅ Executed SQL:</span>
+                    <code>${this.escapeHtml(sql)}</code>
+                </div>
+                <div class="result-info">
+                    <span class="result-badge success">🎉 ${data.rows.length} row${data.rows.length !== 1 ? 's' : ''} returned</span>
+                </div>
                 <div class="result-table-wrapper">
                     <table class="result-table">
                         <thead>
-                            <tr>${data.columns.map(col => `<th>${col}</th>`).join('')}</tr>
+                            <tr>${data.columns.map(col => `<th>${this.escapeHtml(col)}</th>`).join('')}</tr>
                         </thead>
                         <tbody>
                             ${data.rows.map(row => `
                                 <tr>
                                     ${row.map(cell => `
-                                        <td>${cell !== null ? cell : '<span class="null-value">NULL</span>'}</td>
+                                        <td>${cell !== null ? this.escapeHtml(String(cell)) : '<span class="null-value">NULL</span>'}</td>
                                     `).join('')}
                                 </tr>
                             `).join('')}
