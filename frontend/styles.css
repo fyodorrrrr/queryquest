@@ -475,7 +475,7 @@ button {
     font-size: 0.8rem;
 }
 
-.query-canvas:not(:empty) .canvas-placeholder {
+.query-canvas:not(:empty):has(.canvas-block) .canvas-placeholder {
     display: none;
 }
 
