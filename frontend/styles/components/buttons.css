@@ -52,3 +52,31 @@
     color: var(--error);
     border-color: var(--error);
 }
+
+/* Help Button - Inline Style for Placeholder */
+.btn-help {
+    margin-top: 1rem;
+    padding: 0.6rem 1.25rem;
+    background: linear-gradient(135deg, var(--primary-light) 0%, #dbeafe 100%);
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+    color: var(--primary-dark);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-help:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.btn-help:active {
+    transform: translateY(0);
+}

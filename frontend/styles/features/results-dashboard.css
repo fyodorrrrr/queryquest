@@ -390,6 +390,11 @@
     line-height: 1.4;
 }
 
+/* Help Button inside Placeholder */
+.placeholder-message .btn-help {
+    margin-top: 1.25rem;
+}
+
 /* ========== Result Content ========== */
 .result-content {
     animation: fadeInUp 0.4s ease;

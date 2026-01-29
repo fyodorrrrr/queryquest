@@ -173,6 +173,10 @@ export class SQLBlockBuilder {
                             <div class="placeholder-icon">🔮</div>
                             <h4>Run a query to see results</h4>
                             <p>Build your query using blocks, then click "Run Query"</p>
+                            <button class="btn btn-help" id="show-examples-btn">
+                                <span>💡</span>
+                                <span>Need Help?</span>
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -181,6 +185,9 @@ export class SQLBlockBuilder {
         
         // Setup toggle functionality
         this.setupSourceToggle();
+        
+        // Setup examples modal
+        this.setupExamplesModal();
         
         // Fetch and render tables
         await this.fetchAndRenderTable('employees', 'employees-preview');
@@ -206,6 +213,43 @@ export class SQLBlockBuilder {
             const textSpan = toggleBtn.querySelector('span:first-child');
             if (textSpan) {
                 textSpan.textContent = isCollapsed ? 'Show' : 'Hide';
+            }
+        });
+    }
+
+    /**
+     * Setup examples modal functionality
+     */
+    setupExamplesModal() {
+        const showBtn = document.getElementById('show-examples-btn');
+        const closeBtn = document.getElementById('close-examples-btn');
+        const modal = document.getElementById('examples-modal');
+
+        if (showBtn && modal) {
+            showBtn.addEventListener('click', () => {
+                modal.style.display = 'flex';
+            });
+        }
+
+        if (closeBtn && modal) {
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        }
+
+        // Close modal when clicking outside
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+                modal.style.display = 'none';
             }
         });
     }

@@ -167,22 +167,36 @@
             <div id="results-tab" class="tab-content tab-content-active">
                 <div id="message"></div>
                 
-                <!-- Results Info Bar -->
-                <div id="results-info" class="results-info"></div>
+                <!-- Results Info Bar (hidden until query runs) -->
+                <div id="results-info" class="results-info" style="display: none;"></div>
                 
-                <!-- Table Container -->
+                <!-- Table Container (populated by JS) -->
                 <div id="results" class="results-container">
-                    <div class="empty-state">
-                        <div class="empty-state__icon">🧩</div>
-                        <p>Build a query and run it to see results</p>
-                    </div>
                 </div>
                 
-                <div class="example-queries">
-                    <h3>📚 Try building these:</h3>
-                    <code class="example-query">SELECT * FROM employees</code>
-                    <code class="example-query">SELECT name, salary FROM employees WHERE salary > 70000</code>
-                    <code class="example-query">SELECT department, COUNT(*) FROM employees GROUP BY department</code>
+                <!-- Help Modal (hidden by default) -->
+                <div id="examples-modal" class="examples-modal" style="display: none;">
+                    <div class="examples-modal__content">
+                        <div class="examples-modal__header">
+                            <h3>📚 Example Queries</h3>
+                            <button class="examples-modal__close" id="close-examples-btn">&times;</button>
+                        </div>
+                        <div class="examples-modal__body">
+                            <p>Try building these queries using the blocks:</p>
+                            <div class="example-query-card">
+                                <code>SELECT * FROM employees</code>
+                                <span class="example-query-card__desc">Get all employees</span>
+                            </div>
+                            <div class="example-query-card">
+                                <code>SELECT name, salary FROM employees WHERE salary > 70000</code>
+                                <span class="example-query-card__desc">High earners</span>
+                            </div>
+                            <div class="example-query-card">
+                                <code>SELECT department, COUNT(*) FROM employees GROUP BY department</code>
+                                <span class="example-query-card__desc">Count by department</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             

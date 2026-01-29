@@ -18,6 +18,7 @@
 @import url('./styles/components/tables.css');
 @import url('./styles/components/tabs.css');
 @import url('./styles/components/toast.css');
+@import url('./styles/components/modal.css');
 
 /* Features */
 @import url('./styles/features/block-menu.css');
@@ -28,4 +29,3 @@
 /* Utilities */
 @import url('./styles/utilities/scrollbar.css');
 @import url('./styles/utilities/accessibility.css');
-

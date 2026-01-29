@@ -37,6 +37,7 @@
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border);
     max-height: calc(100vh - 140px);
+    position: relative; /* Add this for FAB positioning */
 }
 
 /* Generated SQL Panel */
