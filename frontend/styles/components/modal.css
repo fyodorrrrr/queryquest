@@ -1,28 +1,26 @@
-/* Examples Modal */
+/* Examples Modal - Overlay */
 .examples-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(15, 23, 42, 0.75);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    backdrop-filter: blur(4px);
 }
 
+/* Modal Content Box */
 .examples-modal__content {
-    background: var(--bg-secondary);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
+    background: #ffffff;
+    border-radius: 16px;
     width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
+    max-width: 420px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-    animation: modalSlideIn 0.2s ease-out;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    animation: modalSlideIn 0.3s ease-out;
 }
 
 @keyframes modalSlideIn {
@@ -36,75 +34,282 @@
     }
 }
 
+/* Modal Header */
 .examples-modal__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
 }
 
 .examples-modal__header h3 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .examples-modal__close {
-    background: none;
+    background: rgba(255, 255, 255, 0.2);
     border: none;
-    font-size: 1.5rem;
-    color: var(--text-secondary);
+    font-size: 1.25rem;
+    color: white;
     cursor: pointer;
-    line-height: 1;
-    padding: 0;
-    transition: color 0.2s ease;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
 }
 
 .examples-modal__close:hover {
-    color: var(--error);
+    background: rgba(255, 255, 255, 0.3);
 }
 
+/* Modal Body */
 .examples-modal__body {
-    padding: 1.25rem;
-    overflow-y: auto;
-    max-height: calc(80vh - 60px);
+    padding: 1.5rem;
 }
 
-.examples-modal__body > p {
-    margin: 0 0 1rem 0;
+/* Step Indicators */
+.steps-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.step-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-input);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.step-dot.active {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.step-dot.completed {
+    background: var(--success);
+    color: white;
+}
+
+.step-line {
+    width: 40px;
+    height: 3px;
+    background: var(--bg-input);
+    border-radius: 2px;
+}
+
+/* Modal Steps */
+.modal-step {
+    display: none;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-step.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.step-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.modal-step h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.modal-step p {
+    font-size: 0.9rem;
     color: var(--text-secondary);
+    margin: 0 0 1.25rem 0;
+    line-height: 1.5;
+}
+
+/* Step Tip Box */
+.step-tip {
+    background: var(--primary-light);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 0.85rem;
 }
 
-/* Example Query Cards */
-.example-query-card {
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.75rem;
-    transition: border-color 0.2s ease;
+.step-tip.success {
+    background: var(--success-light);
 }
 
-.example-query-card:last-child {
-    margin-bottom: 0;
+.tip-label {
+    font-weight: 600;
+    color: var(--primary-dark);
 }
 
-.example-query-card:hover {
-    border-color: var(--primary);
+.step-tip.success .tip-label {
+    color: #166534;
 }
 
-.example-query-card code {
-    display: block;
-    font-family: 'Monaco', 'Menlo', monospace;
+.tip-code {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--primary);
-    word-break: break-word;
+    font-weight: 600;
 }
 
-.example-query-card__desc {
-    display: block;
+/* Step Example - Block Flow */
+.step-example {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
     margin-top: 0.5rem;
+}
+
+.example-block {
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
     font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+}
+
+.example-block.command {
+    background: var(--block-command);
+}
+
+.example-block.column {
+    background: var(--block-column);
+}
+
+.example-block.table {
+    background: var(--block-table);
+}
+
+.example-arrow {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* Modal Navigation */
+.modal-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.modal-btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.modal-btn--primary {
+    background: var(--primary);
+    color: white;
+}
+
+.modal-btn--primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.modal-btn--secondary {
+    background: var(--bg-input);
     color: var(--text-secondary);
+}
+
+.modal-btn--secondary:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+/* ========== Help Icon Button ========== */
+.help-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+}
+
+.help-icon:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: scale(1.1);
+}
+
+/* Help Tooltip (appears on hover) */
+.help-tooltip {
+    position: absolute;
+    background: #1e293b;
+    color: white;
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    max-width: 220px;
+    line-height: 1.4;
+    z-index: 1001;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: tooltipFade 0.2s ease;
+}
+
+.help-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    border: 6px solid transparent;
+    border-bottom-color: #1e293b;
+}
+
+@keyframes tooltipFade {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
 }

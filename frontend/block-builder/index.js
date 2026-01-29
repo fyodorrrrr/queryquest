@@ -218,22 +218,64 @@ export class SQLBlockBuilder {
     }
 
     /**
-     * Setup examples modal functionality
+     * Setup examples modal functionality with step navigation
      */
     setupExamplesModal() {
         const showBtn = document.getElementById('show-examples-btn');
         const closeBtn = document.getElementById('close-examples-btn');
         const modal = document.getElementById('examples-modal');
+        const prevBtn = document.getElementById('modal-prev');
+        const nextBtn = document.getElementById('modal-next');
+
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        const updateStep = (step) => {
+            currentStep = step;
+            
+            // Update step content
+            modal.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active'));
+            modal.querySelector(`.modal-step[data-step="${step}"]`)?.classList.add('active');
+            
+            // Update step dots
+            modal.querySelectorAll('.step-dot').forEach(dot => {
+                const dotStep = parseInt(dot.dataset.step);
+                dot.classList.remove('active', 'completed');
+                if (dotStep === step) dot.classList.add('active');
+                if (dotStep < step) dot.classList.add('completed');
+            });
+            
+            // Update navigation buttons
+            prevBtn.style.visibility = step === 1 ? 'hidden' : 'visible';
+            nextBtn.textContent = step === totalSteps ? "Got it! ✓" : "Next →";
+        };
 
         if (showBtn && modal) {
             showBtn.addEventListener('click', () => {
                 modal.style.display = 'flex';
+                updateStep(1); // Reset to step 1
             });
         }
 
         if (closeBtn && modal) {
             closeBtn.addEventListener('click', () => {
                 modal.style.display = 'none';
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 1) updateStep(currentStep - 1);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (currentStep < totalSteps) {
+                    updateStep(currentStep + 1);
+                } else {
+                    modal.style.display = 'none';
+                }
             });
         }
 
@@ -251,6 +293,41 @@ export class SQLBlockBuilder {
             if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
                 modal.style.display = 'none';
             }
+        });
+    }
+
+    /**
+     * Setup help icon tooltips
+     */
+    setupHelpIcons() {
+        const helpTexts = {
+            'blocks': 'These are SQL building blocks! Drag them to the canvas to create queries. Highlighted blocks show what you can add next.',
+            'source': 'This is your data! These tables contain the information you can query. Think of them like spreadsheets.'
+        };
+
+        document.querySelectorAll('.help-icon').forEach(icon => {
+            let tooltip = null;
+
+            icon.addEventListener('mouseenter', (e) => {
+                const helpKey = icon.dataset.help;
+                const text = helpTexts[helpKey] || 'Click for help';
+
+                tooltip = document.createElement('div');
+                tooltip.className = 'help-tooltip';
+                tooltip.textContent = text;
+                document.body.appendChild(tooltip);
+
+                const rect = icon.getBoundingClientRect();
+                tooltip.style.top = `${rect.bottom + 8}px`;
+                tooltip.style.left = `${rect.left - 10}px`;
+            });
+
+            icon.addEventListener('mouseleave', () => {
+                if (tooltip) {
+                    tooltip.remove();
+                    tooltip = null;
+                }
+            });
         });
     }
     

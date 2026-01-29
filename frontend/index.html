@@ -39,7 +39,7 @@
         <!-- LEFT: Block Menu -->
         <aside class="block-menu">
             <div class="block-menu__header">
-                <h2>Puzzle Blocks 🧩</h2>
+                <h2>Puzzle Blocks 🧩 <button class="help-icon" data-help="blocks" title="What are these?">?</button></h2>
                 <p style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem;">Drag available blocks to build</p>
             </div>
             
@@ -178,22 +178,61 @@
                 <div id="examples-modal" class="examples-modal" style="display: none;">
                     <div class="examples-modal__content">
                         <div class="examples-modal__header">
-                            <h3>📚 Example Queries</h3>
+                            <h3>🎯 Getting Started</h3>
                             <button class="examples-modal__close" id="close-examples-btn">&times;</button>
                         </div>
                         <div class="examples-modal__body">
-                            <p>Try building these queries using the blocks:</p>
-                            <div class="example-query-card">
-                                <code>SELECT * FROM employees</code>
-                                <span class="example-query-card__desc">Get all employees</span>
+                            <!-- Step Indicators -->
+                            <div class="steps-indicator">
+                                <span class="step-dot active" data-step="1">1</span>
+                                <span class="step-line"></span>
+                                <span class="step-dot" data-step="2">2</span>
+                                <span class="step-line"></span>
+                                <span class="step-dot" data-step="3">3</span>
                             </div>
-                            <div class="example-query-card">
-                                <code>SELECT name, salary FROM employees WHERE salary > 70000</code>
-                                <span class="example-query-card__desc">High earners</span>
+
+                            <!-- Step 1 -->
+                            <div class="modal-step active" data-step="1">
+                                <div class="step-icon">🧩</div>
+                                <h4>Drag Blocks to Build</h4>
+                                <p>Pick blocks from the left panel and drag them to the canvas in the middle.</p>
+                                <div class="step-tip">
+                                    <span class="tip-label">💡 Start with:</span>
+                                    <code class="tip-code">SELECT</code>
+                                </div>
                             </div>
-                            <div class="example-query-card">
-                                <code>SELECT department, COUNT(*) FROM employees GROUP BY department</code>
-                                <span class="example-query-card__desc">Count by department</span>
+
+                            <!-- Step 2 -->
+                            <div class="modal-step" data-step="2">
+                                <div class="step-icon">🔗</div>
+                                <h4>Connect Your Query</h4>
+                                <p>Blocks snap together like puzzle pieces. Follow the highlighted blocks to build a valid query.</p>
+                                <div class="step-example">
+                                    <span class="example-block command">SELECT</span>
+                                    <span class="example-arrow">→</span>
+                                    <span class="example-block column">*</span>
+                                    <span class="example-arrow">→</span>
+                                    <span class="example-block command">FROM</span>
+                                    <span class="example-arrow">→</span>
+                                    <span class="example-block table">employees</span>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="modal-step" data-step="3">
+                                <div class="step-icon">▶️</div>
+                                <h4>Run & See Results</h4>
+                                <p>Click the green "Run Query" button to see your data appear below!</p>
+                                <div class="step-tip success">
+                                    <span class="tip-label">✅ That's it!</span>
+                                    <span>You just learned the basics of SQL.</span>
+                                </div>
+                            </div>
+
+                            <!-- Navigation Buttons -->
+                            <div class="modal-nav">
+                                <button class="modal-btn modal-btn--secondary" id="modal-prev" style="visibility: hidden;">← Back</button>
+                                <button class="modal-btn modal-btn--primary" id="modal-next">Next →</button>
                             </div>
                         </div>
                     </div>
