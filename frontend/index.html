@@ -247,6 +247,114 @@
             </div>
         </main>
     </div>
+    <!-- HELP MODALS (place before closing </body> tag) -->
+    
+    <!-- Puzzle Blocks Help Modal -->
+    <div id="blocks-help-modal" class="help-modal" style="display: none;">
+        <div class="help-modal__content">
+            <div class="help-modal__header help-modal__header--purple">
+                <span class="help-modal__icon">🧩</span>
+                <h3>What are Puzzle Blocks?</h3>
+                <button class="help-modal__close" data-close="blocks-help-modal">&times;</button>
+            </div>
+            <div class="help-modal__body">
+                <p class="help-modal__intro">
+                    Blocks are <strong>visual pieces</strong> that represent parts of a SQL query. Instead of typing code, you drag and connect them!
+                </p>
+                
+                <div class="help-blocks-list">
+                    <div class="help-block-item">
+                        <span class="help-block-preview command">SELECT</span>
+                        <div class="help-block-desc">
+                            <strong>Commands</strong>
+                            <span>Actions like SELECT, FROM, WHERE — the verbs of SQL</span>
+                        </div>
+                    </div>
+                    <div class="help-block-item">
+                        <span class="help-block-preview table">employees</span>
+                        <div class="help-block-desc">
+                            <strong>Tables</strong>
+                            <span>Where your data lives — like spreadsheets</span>
+                        </div>
+                    </div>
+                    <div class="help-block-item">
+                        <span class="help-block-preview column">name</span>
+                        <div class="help-block-desc">
+                            <strong>Columns</strong>
+                            <span>Specific fields — like spreadsheet columns</span>
+                        </div>
+                    </div>
+                    <div class="help-block-item">
+                        <span class="help-block-preview function">COUNT()</span>
+                        <div class="help-block-desc">
+                            <strong>Functions</strong>
+                            <span>Math helpers — count, sum, average</span>
+                        </div>
+                    </div>
+                    <div class="help-block-item">
+                        <span class="help-block-preview operator">=</span>
+                        <div class="help-block-desc">
+                            <strong>Operators</strong>
+                            <span>Compare values — equals, greater than</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="help-tip-box">
+                    <span class="help-tip-icon">💡</span>
+                    <span><strong>Tip:</strong> Hover over any block to see what it does!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Source Data Help Modal -->
+    <div id="source-help-modal" class="help-modal" style="display: none;">
+        <div class="help-modal__content">
+            <div class="help-modal__header help-modal__header--blue">
+                <span class="help-modal__icon">📁</span>
+                <h3>What is Source Data?</h3>
+                <button class="help-modal__close" data-close="source-help-modal">&times;</button>
+            </div>
+            <div class="help-modal__body">
+                <p class="help-modal__intro">
+                    Source data is the <strong>information you're searching through</strong>. Think of it like a filing cabinet with organized folders.
+                </p>
+                
+                <div class="help-table-explain">
+                    <div class="help-table-card">
+                        <div class="help-table-icon">👥</div>
+                        <div class="help-table-info">
+                            <strong>employees</strong>
+                            <span>A list of people who work at a company — their names, salaries, departments, and when they were hired.</span>
+                        </div>
+                    </div>
+                    <div class="help-table-card">
+                        <div class="help-table-icon">🏢</div>
+                        <div class="help-table-info">
+                            <strong>departments</strong>
+                            <span>A list of company departments — like Engineering, Sales, or Marketing — and where they're located.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="help-analogy">
+                    <div class="help-analogy__header">🤔 Think of it like...</div>
+                    <div class="help-analogy__content">
+                        <p><strong>Tables</strong> = Spreadsheets</p>
+                        <p><strong>Columns</strong> = Headers (Name, Salary)</p>
+                        <p><strong>Rows</strong> = Individual records (each employee)</p>
+                    </div>
+                </div>
+
+                <div class="help-tip-box">
+                    <span class="help-tip-icon">🎯</span>
+                    <span><strong>Your goal:</strong> Use SQL to ask questions about this data!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="block-builder/index.js"></script>
 </body>
 </html>

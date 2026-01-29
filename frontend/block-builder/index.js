@@ -85,7 +85,6 @@ export class SQLBlockBuilder {
     async loadInitialTables() {
         const resultsDiv = document.getElementById('results');
         
-        // Create the new dashboard structure
         resultsDiv.innerHTML = `
             <div class="results-dashboard">
                 <!-- Stats Bar -->
@@ -106,11 +105,11 @@ export class SQLBlockBuilder {
                     </div>
                 </div>
 
-                <!-- Source Data Section (Collapsible) -->
+                <!-- Source Data Section -->
                 <section class="dashboard-section source-section" id="source-section">
                     <div class="section-header">
                         <div class="section-header-content">
-                            <h3>📁 Source Data</h3>
+                            <h3>📁 Source Data <button class="help-icon" data-help="source" title="What is this?">?</button></h3>
                             <p class="section-subtitle">Tables you can query</p>
                         </div>
                         <button class="toggle-btn" id="toggle-source" title="Toggle source data">
@@ -188,6 +187,9 @@ export class SQLBlockBuilder {
         
         // Setup examples modal
         this.setupExamplesModal();
+        
+        // Setup help icons (for source data)
+        this.setupHelpIcons();
         
         // Fetch and render tables
         await this.fetchAndRenderTable('employees', 'employees-preview');
@@ -297,37 +299,55 @@ export class SQLBlockBuilder {
     }
 
     /**
-     * Setup help icon tooltips
+     * Setup help icon modals
      */
     setupHelpIcons() {
-        const helpTexts = {
-            'blocks': 'These are SQL building blocks! Drag them to the canvas to create queries. Highlighted blocks show what you can add next.',
-            'source': 'This is your data! These tables contain the information you can query. Think of them like spreadsheets.'
+        const helpModals = {
+            'blocks': 'blocks-help-modal',
+            'source': 'source-help-modal'
         };
 
+        // Open modal on help icon click
         document.querySelectorAll('.help-icon').forEach(icon => {
-            let tooltip = null;
-
-            icon.addEventListener('mouseenter', (e) => {
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const helpKey = icon.dataset.help;
-                const text = helpTexts[helpKey] || 'Click for help';
-
-                tooltip = document.createElement('div');
-                tooltip.className = 'help-tooltip';
-                tooltip.textContent = text;
-                document.body.appendChild(tooltip);
-
-                const rect = icon.getBoundingClientRect();
-                tooltip.style.top = `${rect.bottom + 8}px`;
-                tooltip.style.left = `${rect.left - 10}px`;
-            });
-
-            icon.addEventListener('mouseleave', () => {
-                if (tooltip) {
-                    tooltip.remove();
-                    tooltip = null;
+                const modalId = helpModals[helpKey];
+                const modal = document.getElementById(modalId);
+                
+                if (modal) {
+                    modal.style.display = 'flex';
                 }
             });
+        });
+
+        // Close modal on close button click
+        document.querySelectorAll('.help-modal__close').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modalId = btn.dataset.close;
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Close modal on backdrop click
+        document.querySelectorAll('.help-modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.help-modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
         });
     }
     
