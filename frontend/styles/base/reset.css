@@ -8,6 +8,12 @@
     box-sizing: border-box;
 }
 
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
 body {
     font-family: var(--font-sans);
     background: var(--bg-primary);
@@ -21,7 +27,15 @@ body {
 button {
     cursor: pointer;
     border: none;
-    font-family: inherit;
+    font-family: var(--font-sans);
+}
+
+input, textarea, select {
+    font-family: var(--font-sans);
+}
+
+code, pre, .mono {
+    font-family: var(--font-mono);
 }
 
 a {

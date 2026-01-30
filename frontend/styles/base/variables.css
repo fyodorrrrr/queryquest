@@ -58,8 +58,8 @@
     --block-value-light: #ede9fe;
     
     /* ========== Typography ========== */
-    --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
-    --font-mono: 'Poppins', 'Consolas', 'Monaco', monospace;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
     
     /* ========== Spacing ========== */
     --spacing-xs: 0.25rem;
@@ -75,7 +75,6 @@
     --radius-xl: 24px;
     --radius-full: 50px;
 }
-
 
 @keyframes pulse {
     0% { transform: scale(1); }
