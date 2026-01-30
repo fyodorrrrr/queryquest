@@ -85,21 +85,21 @@ export const BLOCK_CATEGORIES = {
 };
 
 /**
- * User-friendly labels with emojis for blocks
+ * User-friendly labels for blocks (no emojis)
  */
 export const FRIENDLY_LABELS = {
     // Keywords
-    'SELECT': '📋 Select',
-    'DISTINCT': '🔹 Unique',
-    'FROM': '📁 From Table',
-    'WHERE': '🔍 Filter',
-    'JOIN': '🔗 Join',
-    'ON': '🎯 Match On',
-    'GROUP BY': '📊 Group By',
-    'ORDER BY': '↕️ Sort By',
-    'LIMIT': '🔢 Limit',
-    'AND': '➕ And',
-    'OR': '⚡ Or',
+    'SELECT': 'Select',
+    'DISTINCT': 'Unique',
+    'FROM': 'From Table',
+    'WHERE': 'Filter',
+    'JOIN': 'Join',
+    'ON': 'Match On',
+    'GROUP BY': 'Group By',
+    'ORDER BY': 'Sort By',
+    'LIMIT': 'Limit',
+    'AND': 'And',
+    'OR': 'Or',
     
     // Operators
     '=': 'equals',
@@ -112,22 +112,22 @@ export const FRIENDLY_LABELS = {
     'IN': 'in list',
     
     // Functions
-    'COUNT()': '🔢 Count',
-    'SUM()': '➕ Sum',
-    'AVG()': '📈 Average',
-    'MIN()': '⬇️ Minimum',
-    'MAX()': '⬆️ Maximum',
+    'COUNT()': 'Count',
+    'SUM()': 'Sum',
+    'AVG()': 'Average',
+    'MIN()': 'Minimum',
+    'MAX()': 'Maximum',
     
     // Sort directions
-    'ASC': '⬆️ Ascending',
-    'DESC': '⬇️ Descending',
+    'ASC': 'Ascending',
+    'DESC': 'Descending',
     
     // Tables
-    'employees': '👥 employees',
-    'departments': '🏢 departments',
+    'employees': 'employees',
+    'departments': 'departments',
     
     // Columns
-    '*': '✱ All Columns',
+    '*': 'All Columns',
     'id': 'id',
     'name': 'name',
     'department': 'department',

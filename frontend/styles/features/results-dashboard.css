@@ -46,8 +46,53 @@
 }
 
 .stat-icon {
-    font-size: 1.5rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
     flex-shrink: 0;
+}
+
+.stat-icon--tables {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.stat-icon--tables::before {
+    content: 'T';
+}
+
+.stat-icon--rows {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.stat-icon--rows::before {
+    content: '#';
+}
+
+/* ========== Table Icon ========== */
+.table-icon {
+    width: 24px;
+    height: 24px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.7rem;
+}
+
+/* ========== Flow Arrow Icon ========== */
+.flow-arrow-icon {
+    font-size: 1rem;
+    color: var(--primary);
 }
 
 .stat-content {

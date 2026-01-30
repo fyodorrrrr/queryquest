@@ -90,14 +90,14 @@ export class SQLBlockBuilder {
                 <!-- Stats Bar -->
                 <div class="stats-bar">
                     <div class="stat-item">
-                        <span class="stat-icon">📊</span>
+                        <span class="stat-icon stat-icon--tables"></span>
                         <div class="stat-content">
                             <span class="stat-label">Tables Available</span>
                             <span class="stat-value">2</span>
                         </div>
                     </div>
                     <div class="stat-item stat-highlight" id="result-stat">
-                        <span class="stat-icon">🎯</span>
+                        <span class="stat-icon stat-icon--rows"></span>
                         <div class="stat-content">
                             <span class="stat-label">Rows Returned</span>
                             <span class="stat-value" id="row-count-display">--</span>
@@ -109,7 +109,7 @@ export class SQLBlockBuilder {
                 <section class="dashboard-section source-section" id="source-section">
                     <div class="section-header">
                         <div class="section-header-content">
-                            <h3>📁 Source Data <button class="help-icon" data-help="source" title="What is this?">?</button></h3>
+                            <h3>Source Data <button class="help-icon" data-help="source" title="What is this?">?</button></h3>
                             <p class="section-subtitle">Tables you can query</p>
                         </div>
                         <button class="toggle-btn" id="toggle-source" title="Toggle source data">
@@ -121,7 +121,7 @@ export class SQLBlockBuilder {
                         <div class="table-grid">
                             <div class="mini-table-card" id="employees-preview">
                                 <div class="mini-table-header">
-                                    <span>👥</span> 
+                                    <span class="table-icon">E</span>
                                     <span>employees</span>
                                     <span class="row-badge" id="employees-count">...</span>
                                 </div>
@@ -134,7 +134,7 @@ export class SQLBlockBuilder {
                             </div>
                             <div class="mini-table-card" id="departments-preview">
                                 <div class="mini-table-header">
-                                    <span>🏢</span> 
+                                    <span class="table-icon">D</span>
                                     <span>departments</span>
                                     <span class="row-badge" id="departments-count">...</span>
                                 </div>
@@ -153,7 +153,7 @@ export class SQLBlockBuilder {
                 <div class="flow-indicator" id="flow-indicator">
                     <div class="flow-line"></div>
                     <div class="flow-arrow">
-                        <span>⬇️</span>
+                        <span class="flow-arrow-icon">↓</span>
                         <span>Your query transforms this data</span>
                     </div>
                     <div class="flow-line"></div>
@@ -163,17 +163,16 @@ export class SQLBlockBuilder {
                 <section class="dashboard-section result-section">
                     <div class="section-header">
                         <div class="section-header-content">
-                            <h3>✨ Query Result</h3>
+                            <h3>Query Result</h3>
                             <p class="section-subtitle">Output from your SQL</p>
                         </div>
                     </div>
                     <div class="section-body" id="query-result-container">
                         <div class="placeholder-message">
-                            <div class="placeholder-icon">🔮</div>
+                            <div class="placeholder-icon">?</div>
                             <h4>Run a query to see results</h4>
                             <p>Build your query using blocks, then click "Run Query"</p>
                             <button class="btn btn-help" id="show-examples-btn">
-                                <span>💡</span>
                                 <span>Need Help?</span>
                             </button>
                         </div>
@@ -652,18 +651,18 @@ export class SQLBlockBuilder {
      */
     showToast(message, type = 'info', autoClose = true) {
         const container = document.querySelector('.toast-container');
-        if (!container) return null;
+        if (!container) return;
         
         const icons = {
-            success: '✅',
-            error: '❌',
-            info: '⏳'
+            success: '✓',
+            error: '✗',
+            info: 'i'
         };
         
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
         toast.innerHTML = `
-            <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
+            <span class="toast-icon">${icons[type] || 'i'}</span>
             <span class="toast-message">${message}</span>
             <button class="toast-close" aria-label="Close">×</button>
         `;

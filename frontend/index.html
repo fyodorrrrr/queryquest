@@ -41,7 +41,7 @@
         <!-- LEFT: Block Menu -->
         <aside class="block-menu">
             <div class="block-menu__header">
-                <h2>Puzzle Blocks 🧩 <button class="help-icon" data-help="blocks" title="What are these?">?</button></h2>
+                <h2>Puzzle Blocks <button class="help-icon" data-help="blocks" title="What are these?">?</button></h2>
                 <p style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem;">Drag available blocks to build</p>
             </div>
             
@@ -120,11 +120,11 @@
                     <div class="block block--value" draggable="true" data-type="ASC">ASC</div>
                     <div class="block block--value" draggable="true" data-type="DESC">DESC</div>
                     <div class="block block--value block--value-input" draggable="true" data-type="number">
-                        <span>🔢</span>
+                        <span>#</span>
                         <input type="number" class="block-input" placeholder="123" onclick="event.stopPropagation()">
                     </div>
                     <div class="block block--value block--value-input" draggable="true" data-type="text">
-                        <span>📝</span>
+                        <span>Aa</span>
                         <input type="text" class="block-input" placeholder="text" onclick="event.stopPropagation()">
                     </div>
                 </div>
@@ -134,13 +134,13 @@
         <!-- CENTER: Query Builder -->
         <section class="builder-panel">
             <div class="builder-header">
-                <h2>🔨 Query Builder</h2>
-                <button class="btn btn-clear-builder" id="clear-builder-btn">🗑️ Clear All</button>
+                <h2>Query Builder</h2>
+                <button class="btn btn-clear-builder" id="clear-builder-btn">Clear All</button>
             </div>
             
             <div id="query-canvas" class="query-canvas">
                 <div class="canvas-placeholder">
-                    <span>Drag blocks here to build your query 🧩</span>
+                    <span>Drag blocks here to build your query</span>
                     <br>
                     <small style="color: var(--text-secondary);">Start with SELECT</small>
                 </div>
@@ -161,8 +161,8 @@
         <!-- RIGHT: Results & Schema -->
         <main class="results-panel">
             <nav class="tabs">
-                <button class="tab tab-active" data-tab="results">📊 Results</button>
-                <button class="tab" data-tab="schema">🗃️ Schema</button>
+                <button class="tab tab-active" data-tab="results">Results</button>
+                <button class="tab" data-tab="schema">Schema</button>
             </nav>
             
             <!-- Results Tab -->
@@ -180,7 +180,7 @@
                 <div id="examples-modal" class="examples-modal" style="display: none;">
                     <div class="examples-modal__content">
                         <div class="examples-modal__header">
-                            <h3>🎯 Getting Started</h3>
+                            <h3>Getting Started</h3>
                             <button class="examples-modal__close" id="close-examples-btn">&times;</button>
                         </div>
                         <div class="examples-modal__body">
@@ -195,18 +195,18 @@
 
                             <!-- Step 1 -->
                             <div class="modal-step active" data-step="1">
-                                <div class="step-icon">🧩</div>
+                                <div class="step-icon">1</div>
                                 <h4>Drag Blocks to Build</h4>
                                 <p>Pick blocks from the left panel and drag them to the canvas in the middle.</p>
                                 <div class="step-tip">
-                                    <span class="tip-label">💡 Start with:</span>
-                                    <code class="tip-code">SELECT</code>
+                                    <span class="tip-label">Tip: Start with</span>
+                                    <span class="tip-code">SELECT</span>
                                 </div>
                             </div>
 
                             <!-- Step 2 -->
                             <div class="modal-step" data-step="2">
-                                <div class="step-icon">🔗</div>
+                                <div class="step-icon">2</div>
                                 <h4>Connect Your Query</h4>
                                 <p>Blocks snap together like puzzle pieces. Follow the highlighted blocks to build a valid query.</p>
                                 <div class="step-example">
@@ -222,19 +222,19 @@
 
                             <!-- Step 3 -->
                             <div class="modal-step" data-step="3">
-                                <div class="step-icon">▶️</div>
+                                <div class="step-icon">3</div>
                                 <h4>Run & See Results</h4>
                                 <p>Click the green "Run Query" button to see your data appear below!</p>
                                 <div class="step-tip success">
-                                    <span class="tip-label">✅ That's it!</span>
-                                    <span>You just learned the basics of SQL.</span>
+                                    <span class="tip-label">That's it!</span>
+                                    <span>You just learned SQL basics.</span>
                                 </div>
                             </div>
 
                             <!-- Navigation Buttons -->
                             <div class="modal-nav">
-                                <button class="modal-btn modal-btn--secondary" id="modal-prev" style="visibility: hidden;">← Back</button>
-                                <button class="modal-btn modal-btn--primary" id="modal-next">Next →</button>
+                                <button class="modal-btn modal-btn--secondary" id="modal-prev" style="visibility: hidden;">Back</button>
+                                <button class="modal-btn modal-btn--primary" id="modal-next">Next</button>
                             </div>
                         </div>
                     </div>
@@ -255,7 +255,7 @@
     <div id="blocks-help-modal" class="help-modal" style="display: none;">
         <div class="help-modal__content">
             <div class="help-modal__header help-modal__header--purple">
-                <span class="help-modal__icon">🧩</span>
+                <span class="help-modal__icon">?</span>
                 <h3>What are Puzzle Blocks?</h3>
                 <button class="help-modal__close" data-close="blocks-help-modal">&times;</button>
             </div>
@@ -303,7 +303,7 @@
                 </div>
                 
                 <div class="help-tip-box">
-                    <span class="help-tip-icon">💡</span>
+                    <span class="help-tip-icon">i</span>
                     <span><strong>Tip:</strong> Hover over any block to see what it does!</span>
                 </div>
             </div>
@@ -314,7 +314,7 @@
     <div id="source-help-modal" class="help-modal" style="display: none;">
         <div class="help-modal__content">
             <div class="help-modal__header help-modal__header--blue">
-                <span class="help-modal__icon">📁</span>
+                <span class="help-modal__icon">?</span>
                 <h3>What is Source Data?</h3>
                 <button class="help-modal__close" data-close="source-help-modal">&times;</button>
             </div>
@@ -325,14 +325,14 @@
                 
                 <div class="help-table-explain">
                     <div class="help-table-card">
-                        <div class="help-table-icon">👥</div>
+                        <div class="help-table-icon">E</div>
                         <div class="help-table-info">
                             <strong>employees</strong>
                             <span>A list of people who work at a company — their names, salaries, departments, and when they were hired.</span>
                         </div>
                     </div>
                     <div class="help-table-card">
-                        <div class="help-table-icon">🏢</div>
+                        <div class="help-table-icon">D</div>
                         <div class="help-table-info">
                             <strong>departments</strong>
                             <span>A list of company departments — like Engineering, Sales, or Marketing — and where they're located.</span>
@@ -341,7 +341,7 @@
                 </div>
                 
                 <div class="help-analogy">
-                    <div class="help-analogy__header">🤔 Think of it like...</div>
+                    <div class="help-analogy__header">Think of it like...</div>
                     <div class="help-analogy__content">
                         <p><strong>Tables</strong> = Spreadsheets</p>
                         <p><strong>Columns</strong> = Headers (Name, Salary)</p>
@@ -350,7 +350,7 @@
                 </div>
 
                 <div class="help-tip-box">
-                    <span class="help-tip-icon">🎯</span>
+                    <span class="help-tip-icon">!</span>
                     <span><strong>Your goal:</strong> Use SQL to ask questions about this data!</span>
                 </div>
             </div>

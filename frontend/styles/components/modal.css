@@ -132,8 +132,17 @@
 }
 
 .step-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 1rem;
 }
 
 .modal-step h4 {
@@ -342,7 +351,15 @@
 }
 
 .help-modal__icon {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .help-modal__header h3 {
@@ -470,26 +487,31 @@
 }
 
 .help-table-icon {
-    font-size: 1.75rem;
-    line-height: 1;
-}
-
-.help-table-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.help-table-info strong {
-    font-size: 0.85rem;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-light);
     color: var(--primary);
-    font-family: var(--font-mono);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
 }
 
-.help-table-info span {
+.help-tip-icon {
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
     font-size: 0.75rem;
-    color: var(--text-secondary);
-    line-height: 1.45;
+    flex-shrink: 0;
 }
 
 /* ========== Analogy Box ========== */
