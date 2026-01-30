@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - QueryQuest</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="about.css">
+    <style>
+        html, body {
+            overflow-y: auto !important;
+            height: auto !important;
+        }
+    </style>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header__brand">
+            <h1 class="header__title">QUERYQUEST</h1>
+        </div>
+        
+        <nav class="header__nav">
+            <a href="index.html" class="nav-item" data-page="play">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="nav-label">Play</span>
+            </a>
+            <a href="about.html" class="nav-item nav-item--active" data-page="about">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span class="nav-label">About</span>
+            </a>
+        </nav>
+        
+        <div class="header__spacer"></div>
+    </header>
+
+    <main class="about-page">
+        <section class="about-hero">
+            <div class="about-hero__content">
+                <h1 class="about-hero__title">
+                    About QueryQuest<br>
+                    <span class="highlight">Learn SQL with Puzzle Blocks</span>
+                </h1>
+                <p class="about-hero__description">
+                    Learning SQL shouldn't feel like memorizing a foreign language. 
+                    QueryQuest transforms complex database queries into intuitive, 
+                    drag-and-drop puzzle blocks — making SQL accessible to everyone.
+                </p>
+                <a href="index.html" class="btn-cta">
+                    Start Building Queries
+                </a>
+            </div>
+            
+            <div class="about-hero__images">
+                <div class="image-card image-card--1">
+                    <div class="image-placeholder">
+                        <div class="block-demo">
+                            <span class="demo-block command">SELECT</span>
+                            <span class="demo-block column">*</span>
+                            <span class="demo-block command">FROM</span>
+                        </div>
+                    </div>
+                    <div class="image-connector"></div>
+                </div>
+                <div class="image-card image-card--2">
+                    <div class="image-placeholder">
+                        <div class="block-demo vertical">
+                            <span class="demo-block table">employees</span>
+                            <span class="demo-block operator">WHERE</span>
+                            <span class="demo-block column">salary</span>
+                        </div>
+                    </div>
+                    <div class="image-connector"></div>
+                </div>
+                <div class="image-card image-card--3">
+                    <div class="image-placeholder">
+                        <div class="block-demo">
+                            <span class="demo-block operator">&gt;</span>
+                            <span class="demo-block value">50000</span>
+                        </div>
+                    </div>
+                    <div class="image-connector"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-features">
+            <h2 class="section-title">Why Puzzle Blocks Work</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <h3>Visual Learning</h3>
+                    <p>See how SQL pieces fit together. Color-coded blocks show commands, tables, columns, and values at a glance.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚫</div>
+                    <h3>No Syntax Errors</h3>
+                    <p>Blocks only connect when valid. Learn proper SQL structure without frustrating error messages.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Feedback</h3>
+                    <p>Run queries immediately and see real results. Understand what each block does through experimentation.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Build Confidence</h3>
+                    <p>Progress from simple SELECT statements to complex JOINs. The generated SQL shows you real code as you learn.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-impact">
+            <div class="impact-content">
+                <h2>How Beginners Benefit</h2>
+                <ul class="impact-list">
+                    <li>
+                        <span class="impact-number">1</span>
+                        <div>
+                            <strong>Reduce cognitive load</strong>
+                            <p>Focus on logic, not punctuation. No semicolons, quotes, or brackets to remember.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="impact-number">2</span>
+                        <div>
+                            <strong>Learn by doing</strong>
+                            <p>Drag, drop, and run. See immediate results instead of reading documentation.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="impact-number">3</span>
+                        <div>
+                            <strong>Transition to real SQL</strong>
+                            <p>Watch your blocks become actual code. When ready, write SQL with confidence.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="impact-visual">
+                <div class="code-comparison">
+                    <div class="comparison-side blocks-side">
+                        <span class="comparison-label">Blocks</span>
+                        <div class="mini-blocks">
+                            <span class="mini-block command">SELECT</span>
+                            <span class="mini-block column">name</span>
+                            <span class="mini-block command">FROM</span>
+                            <span class="mini-block table">employees</span>
+                        </div>
+                    </div>
+                    <div class="comparison-arrow">→</div>
+                    <div class="comparison-side code-side">
+                        <span class="comparison-label">SQL</span>
+                        <code>SELECT name<br>FROM employees;</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-cta">
+            <h2>Ready to Start Your Quest?</h2>
+            <p>Jump in and build your first query in seconds.</p>
+            <a href="index.html" class="btn-cta btn-cta--large">Open Query Builder</a>
+        </section>
+    </main>
+</body>
+</html>
