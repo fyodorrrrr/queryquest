@@ -46,116 +46,103 @@
     <main class="about-page">
         <section class="about-hero">
             <div class="about-hero__content">
+                <span class="about-hero__badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    Learn SQL Visually
+                </span>
                 <h1 class="about-hero__title">
-                    About QueryQuest<br>
-                    <span class="highlight">Learn SQL with Puzzle Blocks</span>
+                    Build queries like <span class="highlight">puzzle pieces</span>
                 </h1>
                 <p class="about-hero__description">
                     Learning SQL shouldn't feel like memorizing a foreign language. 
                     QueryQuest transforms complex database queries into intuitive, 
-                    drag-and-drop puzzle blocks — making SQL accessible to everyone.
+                    drag-and-drop blocks — making SQL accessible to everyone.
                 </p>
                 <a href="index.html" class="btn-cta">
                     Start Building Queries
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
                 </a>
             </div>
             
             <div class="about-hero__images">
                 <div class="image-card image-card--1">
-                    <div class="image-placeholder">
-                        <div class="block-demo">
-                            <span class="demo-block command">SELECT</span>
-                            <span class="demo-block column">*</span>
-                            <span class="demo-block command">FROM</span>
-                        </div>
+                    <div class="block-demo">
+                        <span class="demo-block command">SELECT</span>
+                        <span class="demo-block column">name</span>
                     </div>
-                    <div class="image-connector"></div>
                 </div>
                 <div class="image-card image-card--2">
-                    <div class="image-placeholder">
-                        <div class="block-demo vertical">
-                            <span class="demo-block table">employees</span>
-                            <span class="demo-block operator">WHERE</span>
-                            <span class="demo-block column">salary</span>
-                        </div>
+                    <div class="block-demo vertical">
+                        <span class="demo-block command">FROM</span>
+                        <span class="demo-block table">users</span>
+                        <span class="demo-block operator">WHERE</span>
                     </div>
-                    <div class="image-connector"></div>
                 </div>
                 <div class="image-card image-card--3">
-                    <div class="image-placeholder">
-                        <div class="block-demo">
-                            <span class="demo-block operator">&gt;</span>
-                            <span class="demo-block value">50000</span>
-                        </div>
+                    <div class="block-demo">
+                        <span class="demo-block column">age</span>
+                        <span class="demo-block operator">&gt;</span>
+                        <span class="demo-block value">18</span>
                     </div>
-                    <div class="image-connector"></div>
                 </div>
             </div>
         </section>
 
         <section class="about-features">
-            <h2 class="section-title">Why Puzzle <br> Blocks Work</h2>
-            
+            <div class="section-header">
+                <h2 class="section-title">Why Puzzle <br>  Blocks Work</h2>
+                 <p class="section-subtitle">
+                    Visual learning is proven to help beginners understand complex concepts faster and retain knowledge longer.
+                </p>
+            </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Isometric eye/visual icon -->
-                            <ellipse cx="32" cy="32" rx="20" ry="12" fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
-                            <circle cx="32" cy="32" r="8" fill="#e9d5ff" stroke="#8b5cf6" stroke-width="2.5"/>
-                            <circle cx="32" cy="32" r="3" fill="#8b5cf6"/>
-                            <!-- Sparkle accents -->
-                            <circle cx="48" cy="20" r="2" fill="#8b5cf6" opacity="0.5"/>
-                            <circle cx="52" cy="26" r="1.5" fill="#8b5cf6" opacity="0.3"/>
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24" cy="24" r="8" fill="#e9d5ff" stroke="#8b5cf6" stroke-width="3"/>
+                            <ellipse cx="24" cy="24" rx="18" ry="10" fill="none" stroke="#8b5cf6" stroke-width="3"/>
                         </svg>
                     </div>
                     <h3>Visual Learning</h3>
-                    <p>See how SQL pieces fit together. Color-coded blocks show commands, tables, columns, and values at a glance.</p>
+                    <p>See how SQL pieces fit together with color-coded blocks</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Isometric shield with checkmark -->
-                            <path d="M32 8L12 18V32C12 44 20 52 32 56C44 52 52 44 52 32V18L32 8Z" fill="#d1fae5" stroke="#10b981" stroke-width="2.5" stroke-linejoin="round"/>
-                            <path d="M22 32L28 38L42 24" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 6L8 14v12c0 10 6 16 16 20 10-4 16-10 16-20V14L24 6z" fill="#d1fae5" stroke="#10b981" stroke-width="3"/>
+                            <path d="M16 24l6 6 10-10" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
                         </svg>
                     </div>
                     <h3>No Syntax Errors</h3>
-                    <p>Blocks only connect when valid. Learn proper SQL structure without frustrating error messages.</p>
+                    <p>Blocks only connect when valid — learn structure naturally</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Isometric lightning bolt -->
-                            <path d="M36 8L16 36H30L24 56L48 28H34L36 8Z" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5" stroke-linejoin="round"/>
-                            <!-- Speed lines -->
-                            <path d="M50 20L56 18" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-                            <path d="M52 28L58 28" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-                            <path d="M50 36L56 38" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M28 6L12 28h12l-4 14 16-22H24l4-14z" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" stroke-linejoin="round"/>
                         </svg>
                     </div>
                     <h3>Instant Feedback</h3>
-                    <p>Run queries immediately and see real results. Understand what each block does through experimentation.</p>
+                    <p>Run queries immediately and see real results</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Isometric stairs/growth -->
-                            <path d="M8 48H20V40H32V32H44V24H56" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <rect x="8" y="48" width="12" height="8" rx="2" fill="#cffafe" stroke="#06b6d4" stroke-width="2"/>
-                            <rect x="20" y="40" width="12" height="8" rx="2" fill="#a5f3fc" stroke="#06b6d4" stroke-width="2"/>
-                            <rect x="32" y="32" width="12" height="8" rx="2" fill="#67e8f9" stroke="#06b6d4" stroke-width="2"/>
-                            <rect x="44" y="24" width="12" height="8" rx="2" fill="#22d3ee" stroke="#06b6d4" stroke-width="2"/>
-                            <!-- Flag at top -->
-                            <path d="M56 24V12" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
-                            <path d="M56 12L64 16L56 20" fill="#8b5cf6"/>
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="6" y="34" width="8" height="8" rx="2" fill="#cffafe" stroke="#06b6d4" stroke-width="2"/>
+                            <rect x="16" y="26" width="8" height="16" rx="2" fill="#a5f3fc" stroke="#06b6d4" stroke-width="2"/>
+                            <rect x="26" y="18" width="8" height="24" rx="2" fill="#67e8f9" stroke="#06b6d4" stroke-width="2"/>
+                            <rect x="36" y="10" width="8" height="32" rx="2" fill="#22d3ee" stroke="#06b6d4" stroke-width="2"/>
                         </svg>
                     </div>
                     <h3>Build Confidence</h3>
-                    <p>Progress from simple SELECT statements to complex JOINs. The generated SQL shows you real code as you learn.</p>
+                    <p>Progress from simple SELECT to complex JOINs</p>
                 </div>
             </div>
         </section>
@@ -163,6 +150,7 @@
         <section class="about-impact">
             <div class="impact-content">
                 <h2>How Beginners Benefit</h2>
+                <p>QueryQuest removes the barriers that make learning SQL frustrating for newcomers.</p>
                 <ul class="impact-list">
                     <li>
                         <span class="impact-number">1</span>
@@ -181,8 +169,8 @@
                     <li>
                         <span class="impact-number">3</span>
                         <div>
-                            <strong>Transition to real SQL</strong>
-                            <p>Watch your blocks become actual code. When ready, write SQL with confidence.</p>
+                            <strong>Build real skills</strong>
+                            <p>The generated SQL shows you real code — transition to writing queries naturally.</p>
                         </div>
                     </li>
                 </ul>
@@ -190,27 +178,54 @@
             <div class="impact-visual">
                 <div class="code-comparison">
                     <div class="comparison-side blocks-side">
-                        <span class="comparison-label">Blocks</span>
+                        <span class="comparison-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                            Drag blocks
+                        </span>
                         <div class="mini-blocks">
                             <span class="mini-block command">SELECT</span>
                             <span class="mini-block column">name</span>
                             <span class="mini-block command">FROM</span>
-                            <span class="mini-block table">employees</span>
+                            <span class="mini-block table">users</span>
                         </div>
                     </div>
-                    <div class="comparison-arrow">→</div>
+                    <div class="comparison-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12l7 7 7-7"/>
+                        </svg>
+                    </div>
                     <div class="comparison-side code-side">
-                        <span class="comparison-label">SQL</span>
-                        <code>SELECT name<br>FROM employees;</code>
+                        <span class="comparison-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                            Get SQL
+                        </span>
+                        <code>SELECT name<br>FROM users;</code>
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="about-cta">
+            <div class="cta-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+            </div>
             <h2>Ready to Start Your Quest?</h2>
-            <p>Jump in and build your first query in seconds.</p>
-            <a href="index.html" class="btn-cta btn-cta--large">Open Query Builder</a>
+            <p>Jump in and build your first query in seconds — no signup required.</p>
+            <div class="cta-buttons">
+                <a href="index.html" class="btn-cta btn-cta--large">
+                    Open Query Builder
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
         </section>
     </main>
 </body>
