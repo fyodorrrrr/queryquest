@@ -734,7 +734,7 @@ export class SQLBlockBuilder {
             container.innerHTML = `
                 <div class="result-content">
                     <div class="sql-display">
-                        <span class="sql-label">✅ Executed SQL:</span>
+                        <span class="sql-label">Executed SQL:</span>
                         <code>${this.escapeHtml(sql)}</code>
                     </div>
                     <div class="empty-result">
@@ -750,11 +750,8 @@ export class SQLBlockBuilder {
         container.innerHTML = `
             <div class="result-content">
                 <div class="sql-display">
-                    <span class="sql-label">✅ Executed SQL:</span>
+                    <span class="sql-label">Executed SQL:</span>
                     <code>${this.escapeHtml(sql)}</code>
-                </div>
-                <div class="result-info">
-                    <span class="result-badge success">🎉 ${data.rows.length} row${data.rows.length !== 1 ? 's' : ''} returned</span>
                 </div>
                 <div class="result-table-wrapper">
                     <table class="result-table">
