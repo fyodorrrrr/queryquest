@@ -106,18 +106,18 @@ export class SQLBlockBuilder {
                 </div>
 
                 <!-- Source Data Section -->
-                <section class="dashboard-section source-section" id="source-section">
+                <section class="dashboard-section source-section collapsed" id="source-section">
                     <div class="section-header">
                         <div class="section-header-content">
                             <h3>Source Data <button class="help-icon" data-help="source" title="What is this?">?</button></h3>
                             <p class="section-subtitle">Tables you can query</p>
                         </div>
-                        <button class="toggle-btn" id="toggle-source" title="Toggle source data">
-                            <span>Hide</span>
+                        <button class="toggle-btn collapsed" id="toggle-source" title="Toggle source data">
+                            <span>Show</span>
                             <span class="toggle-icon">▲</span>
                         </button>
                     </div>
-                    <div class="section-body collapsible-content" id="source-content">
+                    <div class="section-body collapsible-content collapsed" id="source-content">
                         <div class="table-grid">
                             <div class="mini-table-card" id="employees-preview">
                                 <div class="mini-table-header">
