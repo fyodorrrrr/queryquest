@@ -390,37 +390,76 @@ body:has(.about-page) {
 /* CTA Section */
 .about-cta {
     text-align: center;
-    padding: 8rem 2rem;
-    min-height: 60vh;
+    padding: 6rem 2rem;
+    min-height: 50vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-    color: white;
+    background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
     box-sizing: border-box;
+    position: relative;
+}
+
+.about-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+    border-radius: 2px;
 }
 
 .about-cta h2 {
-    font-size: 3rem;
+    font-size: 2.75rem;
     font-weight: 700;
     margin-bottom: 1rem;
+    color: #1e293b;
+    line-height: 1.2;
 }
 
 .about-cta p {
-    font-size: 1.35rem;
-    opacity: 0.9;
+    font-size: 1.25rem;
+    color: #64748b;
     margin-bottom: 2.5rem;
+    max-width: 480px;
+    line-height: 1.6;
 }
 
 .about-cta .btn-cta {
-    background: white;
-    color: #7c3aed;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    padding: 1.25rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+    transition: all 0.3s ease;
 }
 
 .about-cta .btn-cta:hover {
-    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+}
+
+.about-cta .btn-cta--large {
+    padding: 1.35rem 3rem;
+    font-size: 1.2rem;
+}
+
+/* Optional: Add subtle decorative elements */
+.about-cta::after {
+    content: '';
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
 }
 
 /* Responsive */
@@ -499,10 +538,16 @@ body:has(.about-page) {
     }
     
     .about-cta h2 {
-        font-size: 2rem;
+        font-size: 1.75rem;
     }
     
     .about-cta p {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .about-cta .btn-cta {
+        padding: 1rem 2rem;
+        font-size: 1rem;
     }
 }
