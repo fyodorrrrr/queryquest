@@ -52,6 +52,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
     "http://127.0.0.1:5500",
     "http://localhost:3000",
+    "https://fyodorrrrr.github.io/",
 ]
 
 ROOT_URLCONF = 'sql_playground.urls'
