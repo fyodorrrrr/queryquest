@@ -23,7 +23,12 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = [
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:3000",
+    "queryquest-wo2y.onrender.com", 
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -52,8 +57,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
     "http://127.0.0.1:5500",
     "http://localhost:3000",
-    "https://fyodorrrrr.github.io/",
-    "queryquest-wo2y.onrender.com",
+    "fyodorrrrr.github.io/",
+    "queryquest-wo2y.onrender.com", 
 ]
 
 ROOT_URLCONF = 'sql_playground.urls'
