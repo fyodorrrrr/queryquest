@@ -1,6 +1,6 @@
 // ========== CONFIGURATION ==========
 const CONFIG = {
-    API_URL: 'http://localhost:8000/api',
+    API_URL: 'https://queryquest-wo2y.onrender.com/api',
     ANIMATION_DURATION: 200,
     STAGGER_DELAY: 50,
 };
