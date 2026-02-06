@@ -57,9 +57,16 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
     "http://127.0.0.1:5500",
     "http://localhost:3000",
-    "fyodorrrrr.github.io/",
+    "https://fyodorrrrr.github.io",
     "queryquest-wo2y.onrender.com", 
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://fyodorrrrr.github.io",
+    "https://queryquest-wo2y.onrender.com",
+]
+
+
 
 ROOT_URLCONF = 'sql_playground.urls'
 
