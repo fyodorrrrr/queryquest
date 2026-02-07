@@ -157,8 +157,8 @@ export const SQL_KEYWORDS = [
  * API configuration
  */
 export const API_CONFIG = {
-    baseUrl: 'http://localhost:8000',
+    baseUrl: 'https://queryquest-wo2y.onrender.com/api',
     endpoints: {
-        execute: '/api/execute/'
+        execute: '/execute/'
     }
 };
