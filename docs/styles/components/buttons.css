@@ -80,3 +80,32 @@
 .btn-help:active {
     transform: translateY(0);
 }
+
+/* Run Button Loading State */
+.btn-loading {
+    opacity: 0.7;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
+
+.btn-loading:hover {
+    transform: none !important;
+}
+
+.spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

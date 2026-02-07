@@ -206,3 +206,26 @@
     font-style: italic;
     font-size: 0.8em;
 }
+
+/* Skeleton Loading */
+.skeleton {
+    background: linear-gradient(90deg, #23263a 25%, #2d3048 50%, #23263a 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+.skeleton-text {
+    height: 16px;
+    width: 80%;
+    margin: 6px auto;
+}
+
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}

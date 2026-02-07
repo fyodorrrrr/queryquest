@@ -31,12 +31,46 @@ const api = {
 
 // ========== UI FUNCTIONS ==========
 const ui = {
-    showMessage(text, type) {
-        const msg = document.getElementById('message');
-        msg.innerHTML = `<div class="message-box message-${type}">${this.escapeHtml(text)}</div>`;
-        
-        if (type === 'success') {
-            setTimeout(() => { msg.innerHTML = ''; }, 4000);
+    showMessage(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        if (toast) {
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    },
+
+    showSkeletonLoading() {
+        const resultsBody = document.getElementById('results-body');
+        const resultsHead = document.getElementById('results-head');
+        if (resultsHead) {
+            resultsHead.innerHTML = `
+                <tr>
+                    ${Array(5).fill('<th><div class="skeleton skeleton-text"></div></th>').join('')}
+                </tr>
+            `;
+        }
+        if (resultsBody) {
+            resultsBody.innerHTML = Array(6).fill(`
+                <tr>
+                    ${Array(5).fill('<td><div class="skeleton skeleton-text"></div></td>').join('')}
+                </tr>
+            `).join('');
+        }
+    },
+
+    setRunButtonLoading(loading) {
+        const runBtn = document.getElementById('run-btn');
+        if (!runBtn) return;
+        if (loading) {
+            runBtn.disabled = true;
+            runBtn._originalText = runBtn.innerHTML;
+            runBtn.innerHTML = '<span class="spinner"></span> Running...';
+            runBtn.classList.add('btn-loading');
+        } else {
+            runBtn.disabled = false;
+            runBtn.innerHTML = runBtn._originalText || '▶ Run Query';
+            runBtn.classList.remove('btn-loading');
         }
     },
 
