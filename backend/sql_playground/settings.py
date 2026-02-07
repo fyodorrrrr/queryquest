@@ -58,7 +58,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
     "http://localhost:3000",
     "https://fyodorrrrr.github.io",
-    "queryquest-wo2y.onrender.com", 
+    "https://queryquest-wo2y.onrender.com", 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
